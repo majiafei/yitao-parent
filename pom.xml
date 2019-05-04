@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yitao</groupId>
+    <artifactId>yitao-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>yitao-seller-service</module>
+        <module>yitao-common</module>
+        <module>yitao-domain</module>
+        <module>yitao-mapper</module>
+        <module>yitao-seller-interface</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <dubbo.boot.starter.version>0.2.0</dubbo.boot.starter.version>
+        <spring.boot.starter.parent>2.1.4.RELEASE</spring.boot.starter.parent>
+        <tk-mybatis-version>2.0.4</tk-mybatis-version>
+        <lombok.version>1.18.6</lombok.version>
+        <pagehelper-version>1.2.3</pagehelper-version>
+        <commons-lang3-version>3.7</commons-lang3-version>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <dependencyManagement>
+        <!--dubbo-->
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.boot.starter.version}</version>
+            </dependency>
+
+            <!--springboot starter parent-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.starter.parent}</version>
+                <!--必须设置下面两项，不然子模块导不进去springboot的依赖-->
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!--tk mybatis-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk-mybatis-version}</version>
+            </dependency>
+
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-domain</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-seller-interface</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-mapper</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <!--mybatis结合的分页插件pagehelper-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3-version}</version>
+            </dependency>
+
+            <!--junit-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
