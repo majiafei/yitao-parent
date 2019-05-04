@@ -31,6 +31,11 @@ public class BrandServiceImpl implements BrandService{
     @Autowired
     private BrandMapper brandMapper;
 
+    /**
+     * 根据条件查询品牌
+     * @param brandDTO
+     * @return
+     */
     @Override
     public PageResult<Brand> queryBrandByCondition(BrandDTO brandDTO) {
         // 开启分页
@@ -52,6 +57,11 @@ public class BrandServiceImpl implements BrandService{
         return PageResult.build(pageInfo.getTotal(), brandList);
     }
 
+    /**
+     * 新增品牌
+     * @param brand 品牌
+     * @param cids 分类id
+     */
     @Override
     @Transactional
     public void saveBrand(Brand brand, List<Long> cids) {
@@ -61,4 +71,35 @@ public class BrandServiceImpl implements BrandService{
             brandMapper.saveCategoryBrand(cids.get(i), brand.getBranId());
         }
     }
+
+    /**
+     * 修改品牌信息
+     * @param brand
+     * @param cids
+     */
+    @Override
+    public void updateBrand(Brand brand, List<Long> cids) {
+        brandMapper.updateByPrimaryKey(brand);
+
+        // 删除中间表的数据，然后再插入
+        brandMapper.deleteCategorBrandByBid(brand.getBranId());
+
+        for (int i = 0; i < cids.size(); i++) {
+            brandMapper.saveCategoryBrand(cids.get(i), brand.getBranId());
+        }
+    }
+
+    /**
+     * 删除品牌
+     * @param brandId
+     */
+    @Override
+    public void deleteBrand(Long brandId) {
+        brandMapper.deleteByPrimaryKey(brandId);
+
+        // 删除中间表的数据
+        brandMapper.deleteCategorBrandByBid(brandId);
+    }
+
+
 }
