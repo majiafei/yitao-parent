@@ -34,8 +34,9 @@ public class BrandServiceImplTest extends YitaoSellerServiceApplicationTests {
         BrandDTO brandDTO = new BrandDTO();
         brandDTO.setPage(0);
         brandDTO.setRows(10);
+        brandDTO.setKey("阿迪达斯");
         PageResult<Brand> brandPageResult = brandService.queryBrandByCondition(brandDTO);
-        Assert.assertEquals(10, brandPageResult.getRows().size());
+        Assert.assertEquals(1, brandPageResult.getRows().size());
     }
 
     @Test
@@ -48,6 +49,21 @@ public class BrandServiceImplTest extends YitaoSellerServiceApplicationTests {
 
         Long[] cids = new Long[]{1121L};
         brandService.saveBrand(brand, Arrays.asList(cids));
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteBrand() {
+        brandService.deleteBrand(325402L);
+    }
+
+    @Test
+    @Transactional
+    public void updateBrand() {
+        Brand brand = new Brand();
+        brand.setBrandName("阿迪达斯01");
+        brand.setBranId(325402L);
+        brandService.updateBrand(brand, Arrays.asList(1119L, 1120L));
     }
 
 }

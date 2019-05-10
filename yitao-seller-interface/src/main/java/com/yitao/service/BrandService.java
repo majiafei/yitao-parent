@@ -3,6 +3,7 @@ package com.yitao.service;
 import com.yitao.domain.Brand;
 import com.yitao.dto.BrandDTO;
 import com.yitao.entiry.PageResult;
+import com.yitao.vo.BrandVO;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface BrandService {
     void updateBrand(Brand brand, List<Long> cids);
 
     void deleteBrand(Long brandId);
+
+    List<BrandVO> queryBrandListByCid(Long cid);
 
 }

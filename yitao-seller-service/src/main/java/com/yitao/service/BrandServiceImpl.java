@@ -7,12 +7,14 @@ import com.yitao.domain.Brand;
 import com.yitao.dto.BrandDTO;
 import com.yitao.entiry.PageResult;
 import com.yitao.mapper.BrandMapper;
+import com.yitao.vo.BrandVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class BrandServiceImpl implements BrandService{
 
         Example example = new Example(Brand.class);
         if (StringUtils.isNotBlank(brandDTO.getKey())) {
-            example.createCriteria().andLike("name", brandDTO.getKey()).orEqualTo("letter", brandDTO.getKey());
+            example.createCriteria().andLike("brandName", brandDTO.getKey()).orEqualTo("brandLetter", brandDTO.getKey());
         }
 
         // 排序
@@ -99,6 +101,23 @@ public class BrandServiceImpl implements BrandService{
 
         // 删除中间表的数据
         brandMapper.deleteCategorBrandByBid(brandId);
+    }
+
+    @Override
+    public List<BrandVO> queryBrandListByCid(Long cid) {
+        List<Brand> brandList = brandMapper.queryBrandListByCid(cid);
+
+        BrandVO brandVO = null;
+        List<BrandVO> brandVOList = new ArrayList<>();
+        for (Brand brand : brandList) {
+            brandVO = new BrandVO();
+            brandVO.setImage(brand.getBrandImage());
+            brandVO.setLetter(brand.getBrandLetter());
+            brandVO.setId(brand.getBranId());
+            brandVO.setName(brand.getBrandName());
+            brandVOList.add(brandVO);
+        }
+        return brandVOList;
     }
 
 

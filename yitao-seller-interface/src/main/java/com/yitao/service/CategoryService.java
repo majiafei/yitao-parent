@@ -4,6 +4,7 @@ import com.yitao.domain.Category;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.rmi.server.ServerCloneException;
 import java.util.List;
 
 /**
@@ -17,5 +18,15 @@ import java.util.List;
 public interface CategoryService {
 
     List<Category> queryCategoryListByBid(Long bid);
+
+    List<Category> queryCategoryListByPid(Long parentId);
+
+    void saveCatetory(Category category);
+
+    void updateCategory(Category category);
+
+    void deleteCategoryById(Long categoryId);
+
+    Category selectByPrimaryKey(Long categoryId);
 
 }

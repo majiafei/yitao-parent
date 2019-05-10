@@ -2,6 +2,8 @@ package com.yitao.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @ProjectName: house
  * @Package: com.yitao.dto
@@ -11,7 +13,7 @@ import lombok.Data;
  * @Date: 2019/5/4 11:48
  */
 @Data
-public class BrandDTO {
+public class BrandDTO implements Serializable {
 
     /** 搜索条件 */
     private String key;

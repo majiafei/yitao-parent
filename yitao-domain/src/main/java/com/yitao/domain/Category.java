@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @ProjectName: house
@@ -18,15 +19,15 @@ import javax.persistence.Table;
 
 @Data
 @Table(name = "tb_category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @KeySql(useGeneratedKeys = true)
     @Column(name = "id")
-    private Long categoryId;
+    private Long id;
 
     @Column(name = "name")
-    private String categoryName;
+    private String name;
 
     @Column(name = "parent_id")
     private Long parentId;
