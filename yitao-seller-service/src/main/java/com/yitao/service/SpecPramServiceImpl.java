@@ -34,6 +34,19 @@ public class SpecPramServiceImpl implements SpecParamService{
     }
 
     @Override
+    public List<SpecParam> querySpecParamListByCondition(SpecParam specParam) {
+        Example example = new Example(SpecParam.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (specParam.getCategoryId() != null) {
+            criteria.andEqualTo("categoryId", specParam.getCategoryId());
+        }
+        if (specParam.getSpecGroupId() != null) {
+            criteria.andEqualTo("specGroupId", specParam.getSpecGroupId());
+        }
+        return specParamMapper.selectByExample(example);
+    }
+
+    @Override
     public void saveSpecParam(SpecParam specParam) {
         int insert = specParamMapper.insert(specParam);
         if (insert == 0) {

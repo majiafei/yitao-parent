@@ -32,7 +32,7 @@ public class SpecParam {
     private Long specGroupId;
 
     /**  是否是数字类型 */
-    @Column(name = "numeric")
+    @Column(name = "'numeric'")
     private Byte numeric;
 
     @Column(name = "unit")

@@ -17,6 +17,8 @@ public interface SpecParamService {
 
     List<SpecParam> querySpecPramListByGid(Long groupId);
 
+    List<SpecParam> querySpecParamListByCondition(SpecParam specParam);
+
     void saveSpecParam(SpecParam specParam);
 
     void updateSpecParam(SpecParam specParam);
