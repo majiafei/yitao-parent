@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @ProjectName: house
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 
 @Data
 @Table(name = "tb_spec_group")
-public class SpecGroup {
+public class SpecGroup implements Serializable {
 
     @Id
     @KeySql(useGeneratedKeys = true)

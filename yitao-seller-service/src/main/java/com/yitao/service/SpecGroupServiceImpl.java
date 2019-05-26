@@ -3,12 +3,16 @@ package com.yitao.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.domain.SpecGroup;
+import com.yitao.dto.SpecGroupDTO;
 import com.yitao.mapper.SpecGroupMapper;
+import com.yitao.vo.SpecGroupVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ProjectName: house
@@ -32,14 +36,35 @@ public class SpecGroupServiceImpl implements SpecGroupService{
      * @return
      */
     @Override
-    public List<SpecGroup> querySpecGroupListByCid(Long cid) {
+    public List<SpecGroupVO> querySpecGroupListByCid(Long cid) {
         Example example = new Example(SpecGroup.class);
         example.createCriteria().andEqualTo("categoryId", cid);
-        return specGroupMapper.selectByExample(example);
+
+        List<SpecGroup> specGroupList = specGroupMapper.selectByExample(example);
+        List<SpecGroupVO> specGroupVOList= specGroupList.stream().
+                                        map(specGroup -> {
+                                                SpecGroupVO specGroupVO = new SpecGroupVO();
+                                                specGroupVO.setId(specGroup.getSpectGroupId());
+                                                specGroupVO.setName(specGroup.getSpectGroupName());
+                                                return specGroupVO;
+                                            }).collect(Collectors.toList());
+        return specGroupVOList;
     }
 
     @Override
-    public void saveSpecGroup(SpecGroup specGroup) {
+    public void saveSpecGroup(SpecGroupDTO specGroupDTO) {
+        SpecGroup specGroup = buildSpecGroup(specGroupDTO);
+
+        Example example = new Example(SpecGroup.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("spectGroupName", specGroup.getSpectGroupName());
+        criteria.andEqualTo("categoryId", specGroup.getCategoryId());
+        // 根据名称和分类id查询
+        List<SpecGroup> specGroupList = specGroupMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(specGroupList)) {
+            throw new ServiceException("同分类下的组名称不能重复");
+        }
+
         int insert = specGroupMapper.insert(specGroup);
         if (insert == 0) {
             throw new ServiceException("新增分组失败");
@@ -47,8 +72,9 @@ public class SpecGroupServiceImpl implements SpecGroupService{
     }
 
     @Override
-    public void updateSpectGroup(SpecGroup specGroup) {
-        int i = specGroupMapper.updateByPrimaryKey(specGroup);
+    public void updateSpectGroup(SpecGroupDTO specGroupDTO) {
+        SpecGroup specGroup = buildSpecGroup(specGroupDTO);
+        int i = specGroupMapper.updateByPrimaryKeySelective(specGroup);
         if (i == 0) {
             throw new ServiceException("修改分组失败");
         }
@@ -66,4 +92,14 @@ public class SpecGroupServiceImpl implements SpecGroupService{
     public SpecGroup querySpecGroupByPrimaryKey(Long specGroupId) {
         return specGroupMapper.selectByPrimaryKey(specGroupId);
     }
+
+    private SpecGroup buildSpecGroup(SpecGroupDTO specGroupDTO) {
+        SpecGroup specGroup = new SpecGroup();
+        specGroup.setSpectGroupId(specGroupDTO.getId());
+        specGroup.setCategoryId(specGroupDTO.getCid());
+        specGroup.setSpectGroupName(specGroupDTO.getName());
+
+        return specGroup;
+    }
+
 }

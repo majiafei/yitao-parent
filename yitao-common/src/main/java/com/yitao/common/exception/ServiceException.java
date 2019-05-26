@@ -1,13 +1,16 @@
 package com.yitao.common.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
- * @ProjectName: house
  * @Package: com.yitao.common.exception
  * @ClassName: ServiceException
  * @Author: majiafei
  * @Description:
  * @Date: 2019/5/5 10:56
  */
+@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 public class ServiceException extends RuntimeException {
 
     public ServiceException(String message) {

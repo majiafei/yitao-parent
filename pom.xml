@@ -16,6 +16,9 @@
         <module>yitao-mapper</module>
         <module>yitao-seller-interface</module>
         <module>yitao-seller-webapi</module>
+        <module>yitao-upload-interface</module>
+        <module>yitao-upload-service</module>
+        <module>yitao-upload-webapi</module>
     </modules>
 
     <properties>
@@ -98,6 +101,19 @@
             <dependency>
                 <groupId>com.yitao</groupId>
                 <artifactId>yitao-common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <!--FastDFS客户端-->
+            <dependency>
+                <groupId>org.csource</groupId>
+                <artifactId>fastdfs-client-java</artifactId>
+                <version>1.27-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-upload-interface</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 

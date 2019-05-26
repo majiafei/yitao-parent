@@ -1,6 +1,8 @@
 package com.yitao.service;
 
 import com.yitao.domain.SpecGroup;
+import com.yitao.dto.SpecGroupDTO;
+import com.yitao.vo.SpecGroupVO;
 
 import java.util.List;
 
@@ -14,11 +16,11 @@ import java.util.List;
  */
 public interface SpecGroupService {
 
-    List<SpecGroup> querySpecGroupListByCid(Long cid);
+    List<SpecGroupVO> querySpecGroupListByCid(Long cid);
 
-    void saveSpecGroup(SpecGroup specGroup);
+    void saveSpecGroup(SpecGroupDTO specGroupDTO);
 
-    void updateSpectGroup(SpecGroup specGroup);
+    void updateSpectGroup(SpecGroupDTO specGroupDTO);
 
     void deleteSpecGroup(Long specGroupId);
 

@@ -24,8 +24,8 @@ public class SpecGroupServiceTest extends YitaoSellerServiceApplicationTests {
 
     @Test
     public void testByCid() {
-        List<SpecGroup> specGroups = specGroupService.querySpecGroupListByCid(76L);
-        Assert.assertEquals(8, specGroups.size());
+//        List<SpecGroup> specGroups = specGroupService.querySpecGroupListByCid(76L);
+//        Assert.assertEquals(8, specGroups.size());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class SpecGroupServiceTest extends YitaoSellerServiceApplicationTests {
         SpecGroup specGroup = new SpecGroup();
         specGroup.setCategoryId(76L);
         specGroup.setSpectGroupName("76");
-        specGroupService.saveSpecGroup(specGroup);
+        // specGroupService.saveSpecGroup(specGroup);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SpecGroupServiceTest extends YitaoSellerServiceApplicationTests {
     public void update() {
         SpecGroup specGroup = specGroupService.querySpecGroupByPrimaryKey(1L);
         specGroup.setSpectGroupName("1L");
-        specGroupService.updateSpectGroup(specGroup);
+        // specGroupService.updateSpectGroup(specGroup);
     }
 
     @Test
