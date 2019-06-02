@@ -6,13 +6,14 @@ import com.yitao.bo.UploadBo;
 import com.yitao.upload.service.UploadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 /**
- * @ProjectName: house
  * @Package: com.yitao.yitaouploadwebapi.controller
  * @ClassName: UploadController
  * @Author: majiafei
@@ -32,6 +33,16 @@ public class UploadController {
         uploadBo.setContentType(file.getContentType());
         uploadBo.setFileName(file.getOriginalFilename());
         return ResponseEntity.ok(uploadService.upload(uploadBo));
+    }
+
+    /**
+     * 删除图片
+     * @param path
+     * @return
+     */
+    @GetMapping("/api/upload/delete")
+    public ResponseEntity<Integer> delete(@RequestParam("path") String path) {
+        return ResponseEntity.ok(uploadService.deleteFile(path));
     }
 
 }

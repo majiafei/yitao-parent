@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.yitao.bo.UploadBo;
 import com.yitao.common.FastdfsClient;
 import com.yitao.common.exception.ServiceException;
+import com.yitao.common.exception.UploadException;
 import com.yitao.upload.service.UploadService;
 import com.yitao.yitaouploadservice.config.UploadProerties;
 import lombok.extern.log4j.Log4j2;
@@ -69,5 +70,15 @@ public class UploadServiceImpl implements UploadService {
         }
 
         return uploadProerties.getBaseUrl() + relativePath;
+    }
+
+    @Override
+    public int deleteFile(String path) {
+        try {
+            return fastdfsClient.deleteFile(path);
+        } catch (Exception e) {
+            log.error("delete file failed", e);
+            throw new UploadException("delete file failed");
+        }
     }
 }

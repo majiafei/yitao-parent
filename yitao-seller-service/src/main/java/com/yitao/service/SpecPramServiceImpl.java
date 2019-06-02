@@ -4,10 +4,12 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.domain.SpecParam;
 import com.yitao.mapper.SpecParamMapper;
+import com.yitao.vo.SpecParamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,10 +29,23 @@ public class SpecPramServiceImpl implements SpecParamService{
     private SpecParamMapper specParamMapper;
 
     @Override
-    public List<SpecParam> querySpecPramListByGid(Long groupId) {
+    public List<SpecParamVO> querySpecPramListByCid(Long cid) {
         Example example = new Example(SpecParam.class);
-        example.createCriteria().andEqualTo("specGroupId", groupId);
-        return specParamMapper.selectByExample(example);
+        example.createCriteria().andEqualTo("categoryId", cid);
+
+        List<SpecParam> specParamList = specParamMapper.selectByExample(example);
+
+        List<SpecParamVO> specParamVOList = new ArrayList<>();
+        specParamList.forEach(specParam -> {
+            SpecParamVO specParamVO = new SpecParamVO();
+            specParamVO.setGeneric(specParam.getGeneric());
+            specParamVO.setId(specParam.getSpecParamId());
+            specParamVO.setName(specParam.getSpecParamName());
+            specParamVO.setUnit(specParam.getUnit());
+            specParamVOList.add(specParamVO);
+        });
+
+        return specParamVOList;
     }
 
     @Override

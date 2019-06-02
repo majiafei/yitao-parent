@@ -31,6 +31,9 @@ public class SpecParam {
     @Column(name = "group_id")
     private Long specGroupId;
 
+    @Column(name = "name")
+    private String specParamName;
+
     /**  是否是数字类型 */
     @Column(name = "'numeric'")
     private Byte numeric;

@@ -30,4 +30,9 @@ public class BrandDTO implements Serializable {
     /**  是否倒序 */
     private Boolean desc;
 
+    private Long id;
+    private String name;
+    private String image;
+    private String letter;
+
 }

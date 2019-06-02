@@ -3,6 +3,7 @@ package com.yitao.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @ProjectName: house
@@ -28,4 +29,19 @@ public class SpuDTO implements Serializable {
     /** 是否上下架 */
     private Boolean saleable;
 
+    private Long brandId;
+
+    private Long cid1;
+
+    private Long cid2;
+
+    private Long cid3;
+
+    private List<SkuDTO> skus;
+
+    private SpecDetailDTO spuDetail;
+
+    private String subTitle;
+
+    private String title;
 }

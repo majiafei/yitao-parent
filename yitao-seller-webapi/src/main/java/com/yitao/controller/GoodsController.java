@@ -1,13 +1,17 @@
 package com.yitao.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.yitao.domain.Sku;
 import com.yitao.dto.SpuDTO;
 import com.yitao.entiry.PageResult;
 import com.yitao.service.GoodsService;
+import com.yitao.vo.SkuVO;
+import com.yitao.vo.SpuDetailVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @ProjectName: house
@@ -28,6 +32,22 @@ public class GoodsController {
     @GetMapping("spu/page")
     public ResponseEntity querySpuByCondition(SpuDTO spuDTO) {
         return ResponseEntity.ok(goodsService.querySpuListByCondition(spuDTO));
+    }
+
+    @PostMapping("/goods")
+    public ResponseEntity<Void> saveGoods(@RequestBody SpuDTO spuDTO) {
+        goodsService.saveGoods(spuDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/spu/detail/{spuId}")
+    public ResponseEntity<SpuDetailVO> getSpuDetailBySpuId(@PathVariable("spuId") Long spuId) {
+        return ResponseEntity.ok(goodsService.getSpuDetailBySpuId(spuId));
+    }
+
+    @GetMapping("/sku/list")
+    public ResponseEntity<List<SkuVO>> getSkuListBySpuId(@RequestParam("id") Long spuId) {
+        return ResponseEntity.ok(goodsService.getSkuListBySpuId(spuId));
     }
 
 }

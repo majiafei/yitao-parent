@@ -2,7 +2,12 @@ package com.yitao.service;
 
 import com.yitao.dto.SpuDTO;
 import com.yitao.entiry.PageResult;
+import com.yitao.vo.SkuVO;
+import com.yitao.vo.SpuDetailVO;
 import com.yitao.vo.SpuVO;
+
+import java.rmi.server.ServerCloneException;
+import java.util.List;
 
 /**
  * @ProjectName: house
@@ -16,5 +21,11 @@ import com.yitao.vo.SpuVO;
 public interface GoodsService {
 
     PageResult<SpuVO> querySpuListByCondition(SpuDTO spuDTO);
+
+    void saveGoods(SpuDTO spuDTO);
+
+    SpuDetailVO getSpuDetailBySpuId(Long spuId);
+
+    List<SkuVO> getSkuListBySpuId(Long spuId);
 
 }

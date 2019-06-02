@@ -27,4 +27,6 @@ public interface UploadService {
      */
     String upload(UploadBo uploadBo);
 
+    int deleteFile(String path);
+
 }

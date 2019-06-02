@@ -101,4 +101,8 @@ public class FastdfsClient {
         return null;
     }
 
+    public int deleteFile(String path) throws IOException, MyException {
+        return storageClient.delete_file1(path);
+    }
+
 }

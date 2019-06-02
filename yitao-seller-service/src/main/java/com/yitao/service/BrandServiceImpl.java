@@ -39,24 +39,36 @@ public class BrandServiceImpl implements BrandService{
      * @return
      */
     @Override
-    public PageResult<Brand> queryBrandByCondition(BrandDTO brandDTO) {
+    public PageResult<BrandVO> queryBrandByCondition(BrandDTO brandDTO) {
         // 开启分页
         PageHelper.startPage(brandDTO.getPage(), brandDTO.getRows());
 
         Example example = new Example(Brand.class);
         if (StringUtils.isNotBlank(brandDTO.getKey())) {
-            example.createCriteria().andLike("brandName", brandDTO.getKey()).orEqualTo("brandLetter", brandDTO.getKey());
+            example.createCriteria().andLike("brandName", "%" + brandDTO.getKey() + "%").orEqualTo("brandLetter", brandDTO.getKey());
         }
 
         // 排序
         if (StringUtils.isNotBlank(brandDTO.getSortBy())) {
-            example.setOrderByClause(brandDTO.getSortBy() + (brandDTO.getDesc() ? "desc" : "asc"));
+            example.setOrderByClause(brandDTO.getSortBy() + (brandDTO.getDesc() ? " desc" : " asc"));
         }
 
         List<Brand> brandList = brandMapper.selectByExample(example);
+
+        List<BrandVO> brandVOList = new ArrayList<>();
+
         PageInfo<Brand> pageInfo = new PageInfo<>(brandList);
 
-        return PageResult.build(pageInfo.getTotal(), brandList);
+        brandList.forEach(brand -> {
+            BrandVO brandVO = new BrandVO();
+            brandVO.setName(brand.getBrandName());
+            brandVO.setId(brand.getBranId());
+            brandVO.setImage(brand.getBrandImage());
+            brandVO.setLetter(brand.getBrandLetter());
+            brandVOList.add(brandVO);
+        });
+
+        return PageResult.build(pageInfo.getTotal(), brandVOList);
     }
 
     /**
@@ -118,6 +130,18 @@ public class BrandServiceImpl implements BrandService{
             brandVOList.add(brandVO);
         }
         return brandVOList;
+    }
+
+    @Override
+    public BrandVO getBrandById(Long bid) {
+        Brand brand = brandMapper.selectByPrimaryKey(bid);
+        BrandVO brandVO = new BrandVO();
+        brandVO.setLetter(brand.getBrandLetter());
+        brandVO.setImage(brand.getBrandImage());
+        brandVO.setId(brand.getBranId());
+        brandVO.setName(brand.getBrandName());
+
+        return brandVO;
     }
 
 

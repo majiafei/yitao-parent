@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface BrandService {
 
-    PageResult<Brand> queryBrandByCondition(BrandDTO brandDTO);
+    PageResult<BrandVO> queryBrandByCondition(BrandDTO brandDTO);
 
     void saveBrand(Brand brand, List<Long> cids);
 
@@ -26,5 +26,7 @@ public interface BrandService {
     void deleteBrand(Long brandId);
 
     List<BrandVO> queryBrandListByCid(Long cid);
+
+    BrandVO getBrandById(Long bid);
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.function.LongFunction;
 
 /**
  * @ProjectName: house
@@ -32,7 +33,7 @@ public class BrandController {
     private BrandService brandService;
 
     @GetMapping("/page")
-    public ResponseEntity<PageResult<Brand>> queryBrandByPage(BrandDTO brandDTO) {
+    public ResponseEntity<PageResult<BrandVO>> queryBrandByPage(BrandDTO brandDTO) {
         return ResponseEntity.ok(brandService.queryBrandByCondition(brandDTO));
     }
 
@@ -42,8 +43,13 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveBrand(Brand brand, List<Long> cids) {
+    public ResponseEntity<Void> saveBrand(BrandDTO brandDTO, @RequestParam("cids") List<Long> cids) {
         try {
+            Brand brand = new Brand();
+            brand.setBrandName(brandDTO.getName());
+            brand.setBrandLetter(brandDTO.getLetter());
+            brand.setBrandImage(brandDTO.getImage());
+
             brandService.saveBrand(brand, cids);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -74,5 +80,9 @@ public class BrandController {
         }
     }
 
+    @GetMapping("/bid/{bid}")
+    public ResponseEntity<BrandVO> getBrandById(@PathVariable("bid") Long bid) {
+        return ResponseEntity.ok(brandService.getBrandById(bid));
+    }
 
 }

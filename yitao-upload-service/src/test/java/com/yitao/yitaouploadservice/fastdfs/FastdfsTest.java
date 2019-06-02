@@ -67,4 +67,10 @@ public class FastdfsTest extends YitaoUploadServiceApplicationTests {
         System.out.println(upload);
     }
 
+    @Test
+    public void testDeleteFile() {
+        int i = uploadService.deleteFile("group1/M00/00/00/wKjdZFzx3YqAABNEAAASCtKD0zw400.jpg");
+        System.out.println(i);
+    }
+
 }
