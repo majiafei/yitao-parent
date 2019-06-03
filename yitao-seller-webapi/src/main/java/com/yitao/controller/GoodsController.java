@@ -50,4 +50,11 @@ public class GoodsController {
         return ResponseEntity.ok(goodsService.getSkuListBySpuId(spuId));
     }
 
+    @DeleteMapping("/spu/spuId/{spuId}")
+    public ResponseEntity<Void> deleteGoodsById(@PathVariable("spuId") Long spuId) {
+        goodsService.deleteGoodsById(spuId);
+
+        return ResponseEntity.ok().build();
+    }
+
 }

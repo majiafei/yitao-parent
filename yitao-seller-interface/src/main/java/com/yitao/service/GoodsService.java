@@ -28,4 +28,6 @@ public interface GoodsService {
 
     List<SkuVO> getSkuListBySpuId(Long spuId);
 
+    void deleteGoodsById(Long spuId);
+
 }

@@ -161,6 +161,28 @@ public class GoodsServiceImpl implements GoodsService {
         return skuVOList;
     }
 
+    @Transactional
+    @Override
+    public void deleteGoodsById(Long spuId) {
+        // 删除spu
+        int deleteSpu = spuMapper.deleteByPrimaryKey(spuId);
+        if (deleteSpu == 0) {
+            throw new ServiceException("删除spu失败");
+        }
+        // 删除sku
+        Example example = new Example(Sku.class);
+        example.createCriteria().andEqualTo("spuId", spuId);
+        int deleteSku = skuMapper.deleteByExample(example);
+        if (deleteSku == 0) {
+            throw new ServiceException("删除sku失败");
+        }
+        // 删除详情
+        int deleteDetail = spuDetailMapper.deleteByPrimaryKey(spuId);
+        if (deleteDetail == 0) {
+            throw new ServiceException("删除详情失败");
+        }
+    }
+
     private SpuDetail buildSpuDetail(SpecDetailDTO specDetailDTO) {
         SpuDetail spuDetail = new SpuDetail();
         spuDetail.setAfterService(specDetailDTO.getAfterService());
