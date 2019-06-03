@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.lang.model.element.VariableElement;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -180,6 +181,31 @@ public class GoodsServiceImpl implements GoodsService {
         int deleteDetail = spuDetailMapper.deleteByPrimaryKey(spuId);
         if (deleteDetail == 0) {
             throw new ServiceException("删除详情失败");
+        }
+    }
+
+    @Override
+    public void saleableSpu(SpuDTO spuDTO) {
+        Spu spu = spuMapper.selectByPrimaryKey(spuDTO.getId());
+        if (spu == null) {
+            throw new ServiceException("该商品不存在");
+        }
+
+
+        boolean saleable = (spu.getSaleable() == 0x00) ? false : true;
+        if (saleable != spuDTO.getSaleable()) {
+            throw new ServiceException("该商品的状态已被修改");
+        }
+
+        if (spuDTO.getSaleable()) {
+            spu.setSaleable(Byte.valueOf(GoodsStatusEnum.GOODS_UNDERCARRIAGE_STATUS.getCode() + ""));
+        } else {
+            spu.setSaleable(Byte.valueOf(GoodsStatusEnum.GOODS_SHELF_STATUS.getCode() + ""));
+        }
+
+        int i = spuMapper.updateByPrimaryKey(spu);
+        if (i == 0) {
+            throw new ServiceException("商品上架或者下架失败");
         }
     }
 

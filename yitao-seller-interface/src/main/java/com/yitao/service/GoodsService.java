@@ -30,4 +30,10 @@ public interface GoodsService {
 
     void deleteGoodsById(Long spuId);
 
+    /**
+     * 上下架产品
+     * @param spuDTO
+     */
+    void saleableSpu(SpuDTO spuDTO);
+
 }

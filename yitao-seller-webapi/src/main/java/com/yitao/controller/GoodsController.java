@@ -57,4 +57,10 @@ public class GoodsController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/spu/saleable")
+    public ResponseEntity<Void> saleableSpu(@RequestBody SpuDTO spuDTO) {
+        goodsService.saleableSpu(spuDTO);
+        return ResponseEntity.ok().build();
+    }
+
 }

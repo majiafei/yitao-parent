@@ -26,6 +26,8 @@ public class SpuDTO implements Serializable {
     /**  搜索条件 */
     private String key;
 
+    private Long id;
+
     /** 是否上下架 */
     private Boolean saleable;
 
