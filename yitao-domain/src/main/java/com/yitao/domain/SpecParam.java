@@ -35,7 +35,7 @@ public class SpecParam {
     private String specParamName;
 
     /**  是否是数字类型 */
-    @Column(name = "'numeric'")
+    @Column(name = "is_numeric")
     private Byte numeric;
 
     @Column(name = "unit")

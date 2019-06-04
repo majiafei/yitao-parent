@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @ProjectName: house
  * @Package: com.yitao.controller
  * @ClassName: GoodsController
  * @Author: majiafei

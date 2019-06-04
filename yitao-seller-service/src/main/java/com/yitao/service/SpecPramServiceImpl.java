@@ -3,6 +3,7 @@ package com.yitao.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.domain.SpecParam;
+import com.yitao.dto.SpecParamDTO;
 import com.yitao.mapper.SpecParamMapper;
 import com.yitao.vo.SpecParamVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @ProjectName: house
  * @Package: com.yitao.service
  * @ClassName: SpecPramServiceImpl
  * @Author: majiafei
@@ -29,9 +29,11 @@ public class SpecPramServiceImpl implements SpecParamService{
     private SpecParamMapper specParamMapper;
 
     @Override
-    public List<SpecParamVO> querySpecPramListByCid(Long cid) {
+    public List<SpecParamVO> querySpecPramListByCidAndGid(Long cid, Long groupId) {
         Example example = new Example(SpecParam.class);
-        example.createCriteria().andEqualTo("categoryId", cid);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("categoryId", cid);
+        criteria.andEqualTo("specGroupId", groupId);
 
         List<SpecParam> specParamList = specParamMapper.selectByExample(example);
 
@@ -49,21 +51,42 @@ public class SpecPramServiceImpl implements SpecParamService{
     }
 
     @Override
-    public List<SpecParam> querySpecParamListByCondition(SpecParam specParam) {
+    public List<SpecParamVO> querySpecParamListByCondition(SpecParamDTO specParamDTO) {
         Example example = new Example(SpecParam.class);
         Example.Criteria criteria = example.createCriteria();
-        if (specParam.getCategoryId() != null) {
-            criteria.andEqualTo("categoryId", specParam.getCategoryId());
+        if (specParamDTO.getCid() != null) {
+            criteria.andEqualTo("categoryId", specParamDTO.getCid());
         }
-        if (specParam.getSpecGroupId() != null) {
-            criteria.andEqualTo("specGroupId", specParam.getSpecGroupId());
+        if (specParamDTO.getGid() != null) {
+            criteria.andEqualTo("specGroupId", specParamDTO.getGid());
         }
-        return specParamMapper.selectByExample(example);
+
+        List<SpecParam> specParamList = specParamMapper.selectByExample(example);
+        List<SpecParamVO> specParamVOList = new ArrayList<>();
+        specParamList.forEach(specParam -> {
+            SpecParamVO specParamVO = new SpecParamVO();
+            specParamVO.setGeneric(specParam.getGeneric());
+            specParamVO.setId(specParam.getSpecParamId());
+            specParamVO.setName(specParam.getSpecParamName());
+            specParamVO.setUnit(specParam.getUnit());
+            specParamVOList.add(specParamVO);
+        });
+        return specParamVOList;
     }
 
     @Override
-    public void saveSpecParam(SpecParam specParam) {
-        int insert = specParamMapper.insert(specParam);
+    public void saveSpecParam(SpecParamDTO specParamDTO) {
+        SpecParam specParam = new SpecParam();
+        specParam.setCategoryId(specParamDTO.getCid());
+        specParam.setGeneric(specParamDTO.getGeneric() ? Byte.valueOf(1 + "") : Byte.valueOf(0 + ""));
+        specParam.setNumeric(specParamDTO.getNumeric() ? Byte.valueOf(1 + "") : Byte.valueOf(0 +""));
+        specParam.setSearching(specParamDTO.getSearching() ? Byte.valueOf(1 + "") : Byte.valueOf(0 + ""));
+        specParam.setSegments(specParamDTO.getSegments());
+        specParam.setSpecParamName(specParamDTO.getName());
+        specParam.setSpecGroupId(specParamDTO.getGroupId());
+        specParam.setUnit(specParamDTO.getUnit());
+
+        int insert = specParamMapper.insertSelective(specParam);
         if (insert == 0) {
             throw new ServiceException("新增参数失败");
         }

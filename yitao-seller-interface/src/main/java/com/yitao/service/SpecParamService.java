@@ -1,6 +1,7 @@
 package com.yitao.service;
 
 import com.yitao.domain.SpecParam;
+import com.yitao.dto.SpecParamDTO;
 import com.yitao.vo.SpecParamVO;
 
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
 
 public interface SpecParamService {
 
-    List<SpecParamVO> querySpecPramListByCid(Long groupId);
+    List<SpecParamVO> querySpecPramListByCidAndGid(Long cid, Long groupId);
 
-    List<SpecParam> querySpecParamListByCondition(SpecParam specParam);
+    List<SpecParamVO> querySpecParamListByCondition(SpecParamDTO specParamDTO);
 
-    void saveSpecParam(SpecParam specParam);
+    void saveSpecParam(SpecParamDTO specParamDTO);
 
     void updateSpecParam(SpecParam specParam);
 

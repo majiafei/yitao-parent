@@ -20,5 +20,6 @@ public class SpecGroupVO implements Serializable {
 
     private Long id;
     private String name;
+    private Long cid;
 
 }

@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @ProjectName: house
+ * <p>
+ *     商品服务
+ * </p>
  * @Package: com.yitao.service
  * @ClassName: GoodsServiceImpl
  * @Author: majiafei

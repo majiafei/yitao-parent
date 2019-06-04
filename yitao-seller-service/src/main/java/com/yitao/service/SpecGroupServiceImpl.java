@@ -46,6 +46,7 @@ public class SpecGroupServiceImpl implements SpecGroupService{
                                                 SpecGroupVO specGroupVO = new SpecGroupVO();
                                                 specGroupVO.setId(specGroup.getSpectGroupId());
                                                 specGroupVO.setName(specGroup.getSpectGroupName());
+                                                specGroupVO.setCid(specGroup.getCategoryId());
                                                 return specGroupVO;
                                             }).collect(Collectors.toList());
         return specGroupVOList;
