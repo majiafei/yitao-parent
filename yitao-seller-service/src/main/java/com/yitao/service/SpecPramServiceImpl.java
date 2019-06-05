@@ -68,7 +68,9 @@ public class SpecPramServiceImpl implements SpecParamService{
             specParamVO.setGeneric(specParam.getGeneric());
             specParamVO.setId(specParam.getSpecParamId());
             specParamVO.setName(specParam.getSpecParamName());
+            specParamVO.setNumeric(specParam.getNumeric());
             specParamVO.setUnit(specParam.getUnit());
+            specParamVO.setSegments(specParam.getSegments());
             specParamVOList.add(specParamVO);
         });
         return specParamVOList;

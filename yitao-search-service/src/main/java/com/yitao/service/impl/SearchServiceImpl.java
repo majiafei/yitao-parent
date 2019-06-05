@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.common.utils.JsonUtils;
+import com.yitao.common.utils.NumberUtils;
 import com.yitao.domain.Category;
 import com.yitao.domain.Spu;
 import com.yitao.search.model.Goods;
@@ -21,10 +23,13 @@ import com.yitao.vo.SpuDetailVO;
 import com.yitao.vo.SpuVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -92,19 +97,7 @@ public class SearchServiceImpl implements SearchService {
         List<SpecParamVO> specParamVOList = specParamClient.getSpecParamListByCid(spu.getCid3());
 
         // 处理规格参数
-        Map<String, Object> specParamsMap = Maps.newHashMap();
-        for (SpecParamVO specParamVO : specParamVOList) {
-            Long id = specParamVO.getId();
-            String name = specParamVO.getName();
-            if (specParamVO.getGeneric() == 1) {
-                String genericValue = genericaParamsMap.get(id);
-                specParamsMap.put(name, genericValue);
-            } else {
-                List<String> specicValueList = specialSpecMap.get(id);
-                specParamsMap.put(name, specicValueList);
-            }
-        }
-
+        Map<String, Object> specParamsMap = handleSpecParams(specParamVOList, genericaParamsMap, specialSpecMap);
         // 设置id
         Goods goods = new Goods();
         goods.setId(spu.getSpuId());
@@ -116,5 +109,89 @@ public class SearchServiceImpl implements SearchService {
         goods.setCid3(spu.getCid3());
         goods.setAll(stringBuilder.toString());
         goods.setSpecParams(specParamsMap);
+    }
+
+    /**
+     * 处理规格参数
+     * @param specParamVOList 规格参数list
+     * @param genericaParamsMap 通用规格参数map
+     * @param specialSpecMap 特殊规格参数map
+     * @return
+     */
+    private Map<String, Object> handleSpecParams(List<SpecParamVO> specParamVOList, Map<Long, String> genericaParamsMap, Map<Long, List<String>> specialSpecMap) {
+        Map<String, Object> specParamsMap = Maps.newHashMap();
+        for (SpecParamVO specParamVO : specParamVOList) {
+            String valueResult = "";
+            Long id = specParamVO.getId();
+            String name = specParamVO.getName();
+            if (specParamVO.getGeneric() == 1) {
+                String genericValue = genericaParamsMap.get(id);
+                // 单位
+                String unit = specParamVO.getUnit() != null ? specParamVO.getUnit() : "";
+                // 数值类型的
+                if (specParamVO.getNumeric() != null && specParamVO.getNumeric() == 1) {
+                    double targetValue = NumberUtils.toDouble(genericValue);
+                    // 有分段
+                    if (StringUtils.hasText(specParamVO.getSegments())) {
+                        valueResult = handleSegments(specParamVO, targetValue);
+                    } else {
+                        valueResult = genericValue + unit;
+                    }
+                } else {
+                    valueResult = genericValue;
+                }
+                specParamsMap.put(name, valueResult);
+            } else {
+                specParamsMap.put(name, specialSpecMap.get(id));
+            }
+        }
+
+        return specParamsMap;
+    }
+
+    private String handleSegments(SpecParamVO specParamVO, double targetValue) {
+        String valueResult = "";
+        String segments = specParamVO.getSegments();
+        String[] segmentsArray = StringUtils.tokenizeToStringArray(segments, "-");
+        Set<Double> set = new TreeSet<>();
+
+        try {
+            for (String segment : segmentsArray) {
+                String[] numbers = StringUtils.tokenizeToStringArray(segment, ",");
+                for (String number : numbers) {
+                    set.add(NumberUtils.toDouble(number));
+                }
+            }
+            // 分段中所有数值的集合
+            List<Double> numberList = Lists.newArrayList(set);
+
+            String unit = specParamVO.getUnit() != null ? specParamVO.getUnit() : "";
+
+            if (!CollectionUtils.isEmpty(numberList)) {
+                if (numberList.get(numberList.size() - 1) <= targetValue) {
+                    valueResult = numberList.get(numberList.size() - 1) + "以上";
+                }
+
+                if (numberList.get(0) > targetValue) {
+                    valueResult = numberList.get(0) + unit + "以下";
+                }
+
+                if (!StringUtils.hasText(valueResult)) {
+                    for (int i = 1; i < numberList.size(); i++) {
+                        if (targetValue < numberList.get(i)) {
+                            if (i - 1 == 0) {
+                                valueResult = numberList.get(i - 1) + unit + "以下";
+                            } else {
+                                valueResult = numberList.get(i - 1) + "---" + numberList.get(i) + unit;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            return valueResult;
+        } catch (Exception e) {
+            throw new ServiceException("处理分段失败");
+        }
     }
 }

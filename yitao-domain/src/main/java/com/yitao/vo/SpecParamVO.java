@@ -20,5 +20,6 @@ public class SpecParamVO implements Serializable {
     private Byte generic;
     private Byte numeric;
     private String unit;
+    private String segments;
 
 }
