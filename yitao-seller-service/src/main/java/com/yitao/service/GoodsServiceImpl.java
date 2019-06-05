@@ -211,6 +211,11 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public Spu getSpuById(Long spuId) {
+        return spuMapper.selectByPrimaryKey(spuId);
+    }
+
     private SpuDetail buildSpuDetail(SpecDetailDTO specDetailDTO) {
         SpuDetail spuDetail = new SpuDetail();
         spuDetail.setAfterService(specDetailDTO.getAfterService());

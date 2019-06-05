@@ -3,6 +3,7 @@ package com.yitao.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yitao.common.exception.ServiceException;
 import com.yitao.domain.Brand;
 import com.yitao.dto.BrandDTO;
 import com.yitao.entiry.PageResult;
@@ -135,6 +136,27 @@ public class BrandServiceImpl implements BrandService{
     @Override
     public BrandVO getBrandById(Long bid) {
         Brand brand = brandMapper.selectByPrimaryKey(bid);
+
+        if (brand == null) {
+            throw new ServiceException("品牌不存在");
+        }
+
+        return buildBrandVO(brand);
+    }
+
+    @Override
+    public List<BrandVO> listByIds(List<Long> ids) {
+        List<Brand> brandList = brandMapper.selectByIdList(ids);
+
+        List<BrandVO> brandVOList = new ArrayList<>();
+        brandList.forEach(brand -> {
+            brandVOList.add(buildBrandVO(brand));
+        });
+
+        return brandVOList;
+    }
+
+    private BrandVO buildBrandVO(Brand brand) {
         BrandVO brandVO = new BrandVO();
         brandVO.setLetter(brand.getBrandLetter());
         brandVO.setImage(brand.getBrandImage());

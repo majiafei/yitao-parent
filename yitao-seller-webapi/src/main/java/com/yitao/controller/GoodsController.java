@@ -2,6 +2,7 @@ package com.yitao.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.yitao.domain.Sku;
+import com.yitao.domain.Spu;
 import com.yitao.dto.SpuDTO;
 import com.yitao.entiry.PageResult;
 import com.yitao.service.GoodsService;
@@ -60,6 +61,11 @@ public class GoodsController {
     public ResponseEntity<Void> saleableSpu(@RequestBody SpuDTO spuDTO) {
         goodsService.saleableSpu(spuDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/spu/{spuId}")
+    public ResponseEntity<Spu> getSpuById(@PathVariable("spuId") Long spuId) {
+        return ResponseEntity.ok(goodsService.getSpuById(spuId));
     }
 
 }

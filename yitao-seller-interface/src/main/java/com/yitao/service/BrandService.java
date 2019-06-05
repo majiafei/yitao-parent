@@ -29,4 +29,6 @@ public interface BrandService {
 
     BrandVO getBrandById(Long bid);
 
+    List<BrandVO> listByIds(List<Long> ids);
+
 }

@@ -29,4 +29,6 @@ public interface CategoryService {
 
     Category selectByPrimaryKey(Long categoryId);
 
+    List<Category> listByIds(List<Long> ids);
+
 }

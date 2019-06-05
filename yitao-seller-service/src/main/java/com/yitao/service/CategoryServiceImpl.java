@@ -74,5 +74,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.selectByPrimaryKey(categoryId);
     }
 
+    @Override
+    public List<Category> listByIds(List<Long> ids) {
+        return categoryMapper.selectByIdList(ids);
+    }
+
 
 }

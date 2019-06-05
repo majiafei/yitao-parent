@@ -1,5 +1,6 @@
 package com.yitao.service;
 
+import com.yitao.domain.Spu;
 import com.yitao.dto.SpuDTO;
 import com.yitao.entiry.PageResult;
 import com.yitao.vo.SkuVO;
@@ -35,5 +36,7 @@ public interface GoodsService {
      * @param spuDTO
      */
     void saleableSpu(SpuDTO spuDTO);
+
+    Spu getSpuById(Long spuId);
 
 }

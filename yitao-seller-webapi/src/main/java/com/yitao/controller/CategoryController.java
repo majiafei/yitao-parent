@@ -66,4 +66,9 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/listByCids")
+    public ResponseEntity<List<Category>> listByIds(@RequestParam("cids") List<Long> cids) {
+        return ResponseEntity.ok(categoryService.listByIds(cids));
+    }
+
 }
