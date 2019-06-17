@@ -6,7 +6,7 @@ dubbo:
   protocol:
     port: 4000
   registry:
-    address: zookeeper://192.168.221.99:2181
+    address: zookeeper://192.168.91.131:2181
   provider:
     timeout: 60000
   consumer:

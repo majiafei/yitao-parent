@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.common.utils.JsonUtils;
 import com.yitao.common.utils.NumberUtils;
@@ -13,23 +12,17 @@ import com.yitao.domain.Category;
 import com.yitao.domain.Spu;
 import com.yitao.search.model.Goods;
 import com.yitao.search.service.SearchService;
-import com.yitao.service.client.BrandClient;
-import com.yitao.service.client.CategoryClient;
-import com.yitao.service.client.SpecParamClient;
-import com.yitao.service.client.SpuDetailClient;
+import com.yitao.service.client.*;
+import com.yitao.service.repository.SearchRepository;
 import com.yitao.vo.BrandVO;
+import com.yitao.vo.SkuVO;
 import com.yitao.vo.SpecParamVO;
 import com.yitao.vo.SpuDetailVO;
-import com.yitao.vo.SpuVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.text.ParseException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,8 +47,14 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private SpecParamClient specParamClient;
 
+    @Autowired
+    private SkuClient skuClient;
+
+    @Autowired
+    private SearchRepository searchRepository;
+
     @Override
-    public void importGoods(Spu spu) {
+    public Goods buildGoods(Spu spu) {
         // 品牌
         BrandVO brandVO = brandClient.getBrandById(spu.getBrandId());
         if (brandVO == null) {
@@ -95,9 +94,15 @@ public class SearchServiceImpl implements SearchService {
 
         // 查询类目下所有的规格参数
         List<SpecParamVO> specParamVOList = specParamClient.getSpecParamListByCid(spu.getCid3());
-
         // 处理规格参数
         Map<String, Object> specParamsMap = handleSpecParams(specParamVOList, genericaParamsMap, specialSpecMap);
+
+        // 查询sku信息
+        List<SkuVO> skuVOListBySpuId = skuClient.getSkuVOListBySpuId(spu.getSpuId());
+        if (CollectionUtils.isEmpty(skuVOListBySpuId)) {
+            throw new ServiceException("not found sku info");
+        }
+
         // 设置id
         Goods goods = new Goods();
         goods.setId(spu.getSpuId());
@@ -109,6 +114,10 @@ public class SearchServiceImpl implements SearchService {
         goods.setCid3(spu.getCid3());
         goods.setAll(stringBuilder.toString());
         goods.setSpecParams(specParamsMap);
+        goods.setSkus(JsonUtils.fromObjectToString(skuVOListBySpuId));
+        goods.setCreateTime(new Date());
+
+        return goods;
     }
 
     /**
@@ -182,7 +191,7 @@ public class SearchServiceImpl implements SearchService {
                             if (i - 1 == 0) {
                                 valueResult = numberList.get(i - 1) + unit + "以下";
                             } else {
-                                valueResult = numberList.get(i - 1) + "---" + numberList.get(i) + unit;
+                                valueResult = numberList.get(i - 1) + "-" + numberList.get(i) + unit;
                             }
                             break;
                         }

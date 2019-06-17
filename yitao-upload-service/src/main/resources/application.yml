@@ -5,7 +5,7 @@ dubbo:
   application:
     name: yitao-upload-service
   registry:
-    address: zookeeper://192.168.221.99:2181
+    address: zookeeper://192.168.91.131:2181
   pprotocol:
     port: 20881
     payload: 104857600

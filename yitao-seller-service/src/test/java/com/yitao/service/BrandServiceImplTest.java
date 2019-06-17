@@ -1,17 +1,23 @@
 package com.yitao.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Lists;
 import com.yitao.YitaoSellerServiceApplicationTests;
+import com.yitao.common.utils.JsonUtils;
 import com.yitao.domain.Brand;
+import com.yitao.domain.SpecParam;
 import com.yitao.dto.BrandDTO;
 import com.yitao.entiry.PageResult;
 import com.yitao.mapper.BrandMapper;
+import com.yitao.mapper.SpecParamMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ProjectName: house
@@ -28,6 +34,9 @@ public class BrandServiceImplTest extends YitaoSellerServiceApplicationTests {
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private SpecParamMapper specParamMapper;
 
     @Test
     public void list() {

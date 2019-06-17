@@ -1,6 +1,7 @@
 package com.yitao.search.service;
 
 import com.yitao.domain.Spu;
+import com.yitao.search.model.Goods;
 
 /**
  * @ClassName: SearchService
@@ -14,6 +15,6 @@ public interface SearchService {
      * 向索引库中导入商品
      * @param spu
      */
-    void importGoods(Spu spu);
+    Goods buildGoods(Spu spu);
 
 }

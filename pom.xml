@@ -34,7 +34,7 @@
         <pagehelper-version>1.2.3</pagehelper-version>
         <commons-lang3-version>3.7</commons-lang3-version>
         <junit.version>4.12</junit.version>
-        <elasticsearch.version>2.1.4.RELEASE</elasticsearch.version>
+        <elasticsearch.version>2.1.5.RELEASE</elasticsearch.version>
         <fastjson-version>1.2.46</fastjson-version>
     </properties>
 

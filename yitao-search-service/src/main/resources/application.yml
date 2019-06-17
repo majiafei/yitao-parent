@@ -1,0 +1,21 @@
+server:
+  port: 7778
+
+#dubbo
+dubbo:
+  application:
+    name: yitao-search-service
+  registry:
+    address: zookeeper://192.168.91.131:2181
+  protocol:
+    port: 20882
+
+seller:
+  server:
+    url: http://api.yitao.com
+
+spring:
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster- nodes: 192.168.91.130:9300

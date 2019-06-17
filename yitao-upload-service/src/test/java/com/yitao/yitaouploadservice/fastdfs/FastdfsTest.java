@@ -35,12 +35,12 @@ public class FastdfsTest extends YitaoUploadServiceApplicationTests {
 
     @Test
     public void testUpload() throws IOException, MyException {
-        ClientGlobal.init("F:\\myproject\\idea\\yitao_02\\yitao-parent\\yitao-upload-service\\src\\main\\resources\\fastdfs\\fdfs_client.conf");
+        ClientGlobal.init("E:\\mjf_project\\yitao\\yitao-parent\\yitao-upload-service\\src\\main\\resources\\fastdfs\\fdfs_client.conf");
         TrackerClient trackerClient = new TrackerClient();
         TrackerServer trackerServer = trackerClient.getConnection();
         StorageServer storageServer = null;
         StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-        String[] paths = storageClient.upload_appender_file("C:\\Users\\pc\\Desktop\\yitao\\8e7968901ac93ef9.png", "png", null);
+        String[] paths = storageClient.upload_appender_file("C:\\Users\\admin\\Desktop\\images\\5cde18c9N4003a880.jpg", "png", null);
         System.out.println(Arrays.toString(paths));
     }
 
@@ -51,7 +51,7 @@ public class FastdfsTest extends YitaoUploadServiceApplicationTests {
 //        String path = fastdfsClient.upload("C:\\Users\\pc\\Desktop\\yitao\\8e7968901ac93ef9.png", "png");
 //        System.out.println(path);
 
-        File file = new File("C:\\Users\\pc\\Desktop\\yitao\\8e7968901ac93ef9.png");
+        File file = new File("C:\\Users\\admin\\Desktop\\images\\5cde18c9N4003a880.jpg");
         byte[] bytes = new byte[1024];
         FileInputStream fileInputStream = new FileInputStream(file);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
