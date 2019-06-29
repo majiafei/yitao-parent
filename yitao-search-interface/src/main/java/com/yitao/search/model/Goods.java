@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName: Goods
@@ -61,6 +62,8 @@ public class Goods {
 
     /** 规格参数 */
     private Map<String, Object> specParams;
+
+    private Set<Double> priceSet;
 
     @Field(type = FieldType.Keyword, index = false)
     private String skus;
