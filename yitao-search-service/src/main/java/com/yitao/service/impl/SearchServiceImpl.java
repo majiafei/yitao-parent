@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.common.utils.JsonUtils;
 import com.yitao.common.utils.NumberUtils;
@@ -102,6 +103,10 @@ public class SearchServiceImpl implements SearchService {
         if (CollectionUtils.isEmpty(skuVOListBySpuId)) {
             throw new ServiceException("not found sku info");
         }
+        Set<Double> priceSet = Sets.newTreeSet();
+            skuVOListBySpuId.forEach(skuVO -> {
+            priceSet.add(skuVO.getPrice());
+        });
 
         // 设置id
         Goods goods = new Goods();
@@ -116,6 +121,7 @@ public class SearchServiceImpl implements SearchService {
         goods.setSpecParams(specParamsMap);
         goods.setSkus(JsonUtils.fromObjectToString(skuVOListBySpuId));
         goods.setCreateTime(new Date());
+        goods.setPriceSet(priceSet);
 
         return goods;
     }
