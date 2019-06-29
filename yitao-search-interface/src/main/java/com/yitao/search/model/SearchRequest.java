@@ -1,7 +1,6 @@
 package com.yitao.search.model;
 
 import lombok.Data;
-import org.apache.ibatis.annotations.Delete;
 
 import java.util.Map;
 

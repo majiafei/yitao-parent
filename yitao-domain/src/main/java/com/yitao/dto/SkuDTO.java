@@ -24,7 +24,7 @@ public class SkuDTO implements Serializable {
 
     private String ownSpec;
 
-    private Long price;
+    private Double price;
 
     private Integer stock;
 

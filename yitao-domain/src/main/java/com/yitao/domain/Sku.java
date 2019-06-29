@@ -36,7 +36,7 @@ public class Sku {
     private String images;
 
     @Column(name = "price")
-    private Long price;
+    private Double price;
 
     /** 特有规格属性在spu属性模板中的对应下标组合 */
     @Column(name = "indexes")
