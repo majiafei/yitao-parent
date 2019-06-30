@@ -29,6 +29,7 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://api.yitao.com");
         config.addAllowedOrigin("http://manage.yitao.com");
         config.addAllowedOrigin("http://image.yitao.com");
+        config.addAllowedOrigin("http://www.yitao.com");
         // 允许发送cookie
         config.setAllowCredentials(true);
 
