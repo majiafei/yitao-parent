@@ -154,6 +154,7 @@ public class GoodsServiceImpl implements GoodsService {
         skuList.forEach(sku -> {
             SkuVO skuVO = new SkuVO();
             BeanUtils.copyProperties(sku, skuVO);
+            skuVO.setId(sku.getSkuId());
 
             Stock stock = stockMapper.selectByPrimaryKey(sku.getSkuId());
             skuVO.setStock(stock.getStock());

@@ -21,8 +21,8 @@ import java.util.Map;
 public class SearchResult<T> extends PageResult<T> implements Serializable {
     private static final long serialVersionUID = 8652079038727336732L;
 
-    private List<BrandVO> brandVOList;
-    private List<Category> categoryList;
+    private List<BrandVO> brands;
+    private List<Category> categories;
     // 规格参数
     private List<Map<String, Object>> specs;
 
@@ -30,8 +30,8 @@ public class SearchResult<T> extends PageResult<T> implements Serializable {
                         List<BrandVO> brandVOList, List<Category> categoryList,
                         List<Map<String, Object>> specs) {
         super(total, totalPages, goodsList);
-        this.brandVOList = brandVOList;
-        this.categoryList = categoryList;
+        this.brands = brandVOList;
+        this.categories = categoryList;
         this.specs = specs;
     }
 

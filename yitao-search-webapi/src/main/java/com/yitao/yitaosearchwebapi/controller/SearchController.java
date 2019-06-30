@@ -6,6 +6,7 @@ import com.yitao.search.service.SearchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -26,8 +27,8 @@ public class SearchController {
     private SearchService searchService;
 
     @PostMapping("/page")
-    public ResponseEntity search(SearchRequest searchRequest) {
-        return null;
+    public ResponseEntity search(@RequestBody SearchRequest searchRequest) {
+        return ResponseEntity.ok(searchService.search(searchRequest));
     }
 
 }

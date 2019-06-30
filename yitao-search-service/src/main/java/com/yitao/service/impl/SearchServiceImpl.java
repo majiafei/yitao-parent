@@ -10,10 +10,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.common.utils.JsonUtils;
 import com.yitao.common.utils.NumberUtils;
-import com.yitao.domain.Brand;
-import com.yitao.domain.Category;
-import com.yitao.domain.SpecParam;
-import com.yitao.domain.Spu;
+import com.yitao.domain.*;
 import com.yitao.search.model.Goods;
 import com.yitao.search.model.SearchRequest;
 import com.yitao.search.model.SearchResult;
@@ -128,10 +125,22 @@ public class SearchServiceImpl implements SearchService {
         if (CollectionUtils.isEmpty(skuVOListBySpuId)) {
             throw new ServiceException("not found sku info");
         }
+
         Set<Double> priceSet = Sets.newTreeSet();
-            skuVOListBySpuId.forEach(skuVO -> {
-            priceSet.add(skuVO.getPrice());
-        });
+        //设置存储skus的json结构的集合，用map结果转化sku对象，转化为json之后与对象结构相似（或者重新定义一个对象，存储前台要展示的数据，并把sku对象转化成自己定义的对象）
+        List<Map<String, Object>> skus = new ArrayList<>();
+        //从sku中取出要进行展示的字段，并将sku转换成json格式
+        for (SkuVO sku : skuVOListBySpuId) {
+            priceSet.add(sku.getPrice());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("id", sku.getId());
+            map.put("title", sku.getTitle());
+            //sku中有多个图片，只展示第一张
+            map.put("image", org.apache.commons.lang3.StringUtils.substringBefore(sku.getImages(), ","));
+            map.put("price", sku.getPrice());
+
+            skus.add(map);
+        }
 
         // 设置id
         Goods goods = new Goods();
@@ -144,7 +153,7 @@ public class SearchServiceImpl implements SearchService {
         goods.setCid3(spu.getCid3());
         goods.setAll(stringBuilder.toString());
         goods.setSpecParams(specParamsMap);
-        goods.setSkus(JsonUtils.fromObjectToString(skuVOListBySpuId));
+        goods.setSkus(JsonUtils.fromObjectToString(skus));
         goods.setCreateTime(new Date());
         goods.setPriceSet(priceSet);
 
@@ -160,7 +169,7 @@ public class SearchServiceImpl implements SearchService {
         // 查询做字段的帅选
         queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id","subtitle","skus"}, null));
         // 设置搜索条件
-        queryBuilder.withQuery(QueryBuilders.matchQuery("all", searchRequest.getKeywords()).operator(Operator.AND));
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all", searchRequest.getKey()).operator(Operator.AND));
 
         // 品牌聚合
         queryBuilder.addAggregation(AggregationBuilders.terms(BRAND_AGG_NAME).field("brandId"));
@@ -250,17 +259,10 @@ public class SearchServiceImpl implements SearchService {
                 //创建聚合结果
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("k", name);
-                List<String> options = Lists.newArrayList();
-                for (Terms.Bucket bucket : terms.getBuckets()) {
-                    if (StringUtils.hasText(bucket.getKeyAsString())) {
-                        options.add(bucket.getKeyAsString());
-                    }
-                }
-                map.put("options", options);
-            /*    map.put("options", terms.getBuckets()
+                map.put("options", terms.getBuckets()
                         .stream()
-                        .map(b -> ((Terms.Bucket) b).getKey())
-                        .collect(Collectors.toList()));*/
+                        .map(b -> b.getKey())
+                        .collect(Collectors.toList()));
                 specs.add(map);
             }
         }

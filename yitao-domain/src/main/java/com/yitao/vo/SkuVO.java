@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Data
 public class SkuVO implements Serializable {
 
+    private Long id;
+
     private Boolean enable;
 
     private String images;

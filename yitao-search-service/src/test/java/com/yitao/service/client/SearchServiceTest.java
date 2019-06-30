@@ -146,7 +146,7 @@ public class SearchServiceTest extends YitaoSearchServiceApplicationTests {
     @Test
     public void testSearch() {
         SearchRequest searchRequest = new SearchRequest();
-        searchRequest.setKeywords("小米手机");
+        searchRequest.setKey("小米手机");
         searchRequest.setPage(1);
 
         SearchResult<Goods> search = searchService.search(searchRequest);

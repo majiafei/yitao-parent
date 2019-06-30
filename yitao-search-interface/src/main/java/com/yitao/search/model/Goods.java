@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +21,8 @@ import java.util.Set;
 
 @Document(indexName = "goods", type = "docs", shards = 1, replicas = 1)
 @Data
-public class Goods {
+public class Goods implements Serializable {
+    private static final long serialVersionUID = 4609111673093937721L;
 
     /** spuid */
     @Id
