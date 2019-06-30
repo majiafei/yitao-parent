@@ -93,13 +93,6 @@ public class SearchServiceTest extends YitaoSearchServiceApplicationTests {
     }
 
     @Test
-    public void testMatch() {
-        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("all", "小米");
-        Iterable<Goods> search = searchRepository.search(queryBuilder);
-        search.forEach(System.out::println);
-    }
-
-    @Test
     public void testNativeQuery(){
         NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
         searchQueryBuilder.withQuery(QueryBuilders.matchQuery("all", "小米"));
@@ -113,6 +106,13 @@ public class SearchServiceTest extends YitaoSearchServiceApplicationTests {
         Page<Goods> search = searchRepository.search(searchQueryBuilder.build());
         System.out.println(search.getTotalElements());
         System.out.println(search.getTotalPages());
+        search.forEach(System.out::println);
+    }
+
+    @Test
+    public void testMatch() {
+        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("all", "小米");
+        Iterable<Goods> search = searchRepository.search(queryBuilder);
         search.forEach(System.out::println);
     }
 
