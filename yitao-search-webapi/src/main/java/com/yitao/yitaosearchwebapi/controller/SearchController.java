@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * <p>
+ *     前台工程的启动:live-server --port=7093
+ * </p>
  * @Package: com.yitao.yitaosearchwebapi.controller
  * @ClassName: SearchController
  * @Author: majiafei
