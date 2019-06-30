@@ -2,6 +2,9 @@ package com.yitao.search.service;
 
 import com.yitao.domain.Spu;
 import com.yitao.search.model.Goods;
+import com.yitao.search.model.SearchRequest;
+import com.yitao.search.model.SearchResult;
+import org.springframework.data.domain.PageRequest;
 
 /**
  * @ClassName: SearchService
@@ -16,5 +19,7 @@ public interface SearchService {
      * @param spu
      */
     Goods buildGoods(Spu spu);
+
+    SearchResult<Goods> search(SearchRequest searchRequest);
 
 }

@@ -71,6 +71,7 @@ public class SpecPramServiceImpl implements SpecParamService{
             specParamVO.setNumeric(specParam.getNumeric());
             specParamVO.setUnit(specParam.getUnit());
             specParamVO.setSegments(specParam.getSegments());
+            specParamVO.setIsSearching(specParam.getSearching());
             specParamVOList.add(specParamVO);
         });
         return specParamVOList;
@@ -82,7 +83,7 @@ public class SpecPramServiceImpl implements SpecParamService{
         specParam.setCategoryId(specParamDTO.getCid());
         specParam.setGeneric(specParamDTO.getGeneric() ? Byte.valueOf(1 + "") : Byte.valueOf(0 + ""));
         specParam.setNumeric(specParamDTO.getNumeric() ? Byte.valueOf(1 + "") : Byte.valueOf(0 +""));
-        specParam.setSearching(specParamDTO.getSearching() ? Byte.valueOf(1 + "") : Byte.valueOf(0 + ""));
+        specParam.setSearching(specParamDTO.getSearching());
         specParam.setSegments(specParamDTO.getSegments());
         specParam.setSpecParamName(specParamDTO.getName());
         specParam.setSpecGroupId(specParamDTO.getGroupId());

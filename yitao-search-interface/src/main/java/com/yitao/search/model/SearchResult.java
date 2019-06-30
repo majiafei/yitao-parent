@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ProjectName: house
  * @Package: com.yitao.search.model
  * @ClassName: SearchResult
  * @Author: majiafei
@@ -19,21 +18,27 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
-public class SearchResult<Goods> extends PageResult<Goods> implements Serializable {
+public class SearchResult<T> extends PageResult<T> implements Serializable {
     private static final long serialVersionUID = 8652079038727336732L;
 
     private List<BrandVO> brandVOList;
     private List<Category> categoryList;
     // 规格参数
-    private Map<String, Object> specs;
+    private List<Map<String, Object>> specs;
 
-    public SearchResult(long total, Integer totalPages, List<Goods> goodsList,
-                        List<BrandVO> brandVOList, List<Category> categoryList, Map<String, Object> specs) {
+    public SearchResult(long total, Integer totalPages, List<T> goodsList,
+                        List<BrandVO> brandVOList, List<Category> categoryList,
+                        List<Map<String, Object>> specs) {
         super(total, totalPages, goodsList);
         this.brandVOList = brandVOList;
         this.categoryList = categoryList;
         this.specs = specs;
     }
 
+    public static <T> SearchResult build(long total, Integer totalPages, List<T> goodsList,
+                                      List<BrandVO> brandVOList, List<Category> categoryList,
+                                      List<Map<String, Object>> specs) {
+        return new SearchResult(total, totalPages, goodsList, brandVOList, categoryList, specs);
+    }
 
 }

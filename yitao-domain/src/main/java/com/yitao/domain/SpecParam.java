@@ -45,7 +45,7 @@ public class SpecParam {
     private Byte generic;
 
     @Column(name = "searching")
-    private Byte searching;
+    private Boolean searching;
 
     /**
      * 数值类型参数，如果需要搜索，则添加分段间隔值，

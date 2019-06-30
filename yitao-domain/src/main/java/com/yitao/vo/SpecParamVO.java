@@ -21,5 +21,6 @@ public class SpecParamVO implements Serializable {
     private Byte numeric;
     private String unit;
     private String segments;
+    private Boolean isSearching;
 
 }
