@@ -7,6 +7,8 @@ import com.yitao.common.utils.RestTemplateUtils;
 import com.yitao.domain.Spu;
 import com.yitao.entiry.PageResult;
 import com.yitao.search.model.Goods;
+import com.yitao.search.model.SearchRequest;
+import com.yitao.search.model.SearchResult;
 import com.yitao.search.service.SearchService;
 import com.yitao.service.YitaoSearchServiceApplicationTests;
 import com.yitao.service.repository.SearchRepository;
@@ -139,6 +141,15 @@ public class SearchServiceTest extends YitaoSearchServiceApplicationTests {
             System.out.println(bucket.getDocCount());
             System.out.println(bucket.getKeyAsString());
         }
+    }
+
+    @Test
+    public void testSearch() {
+        SearchRequest searchRequest = new SearchRequest();
+        searchRequest.setKeywords("小米手机");
+        searchRequest.setPage(1);
+
+        SearchResult<Goods> search = searchService.search(searchRequest);
     }
 
 }
