@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class YitaoSearchServiceApplication {
 
     public static void main(String[] args) {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(YitaoSearchServiceApplication.class, args);
     }
 
