@@ -14,6 +14,19 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://127.0.0.1:3306/orange?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
     username: root
+  rabbitmq:
+    addresses: 192.168.221.131
+    username: admin
+    password: admin
+    virtual-host: /
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+      exchange: yt.item.exchange
+    publisher-confirms: true
 
 dubbo:
   application:
@@ -21,7 +34,7 @@ dubbo:
   protocol:
     port: 3000
   registry:
-    address: zookeeper://192.168.221.99:2181
+    address: zookeeper://192.168.91.131:2181
   provider:
     timeout: 60000
   consumer:
@@ -33,3 +46,4 @@ logging:
 
 server:
   port: 8000
+
