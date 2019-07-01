@@ -71,4 +71,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.listByIds(cids));
     }
 
+    /**
+     * 根据cid3查询三级分类
+     * @param id
+     * @return
+     */
+    @GetMapping("all/level/{id}")
+    public ResponseEntity<List<Category>> queryAllByCid3(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(categoryService.queryAllByCid3(id));
+    }
+
 }

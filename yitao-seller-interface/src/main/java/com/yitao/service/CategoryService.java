@@ -31,4 +31,6 @@ public interface CategoryService {
 
     List<Category> listByIds(List<Long> ids);
 
+    List<Category> queryAllByCid3(Long id);
+
 }

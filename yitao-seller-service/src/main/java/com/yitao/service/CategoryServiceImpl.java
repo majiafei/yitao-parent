@@ -6,9 +6,11 @@ import com.yitao.domain.Category;
 import com.yitao.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.rmi.server.ServerCloneException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -77,6 +79,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> listByIds(List<Long> ids) {
         return categoryMapper.selectByIdList(ids);
+    }
+
+    @Override
+    public List<Category> queryAllByCid3(Long id) {
+        Category c3 = categoryMapper.selectByPrimaryKey(id);
+        Category c2 = categoryMapper.selectByPrimaryKey(c3.getParentId());
+        Category c1 = categoryMapper.selectByPrimaryKey(c2.getParentId());
+        List<Category> list = Arrays.asList(c1, c2, c3);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new ServiceException("分类不存在");
+        }
+        return list;
     }
 
 

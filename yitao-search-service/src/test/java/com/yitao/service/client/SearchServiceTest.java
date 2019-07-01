@@ -1,7 +1,6 @@
 package com.yitao.service.client;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.google.common.collect.Maps;
 import com.yitao.common.utils.JsonUtils;
 import com.yitao.common.utils.RestTemplateUtils;
 import com.yitao.domain.Spu;
@@ -15,11 +14,8 @@ import com.yitao.service.repository.SearchRepository;
 import com.yitao.vo.SpuVO;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
-import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
@@ -32,7 +28,6 @@ import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
