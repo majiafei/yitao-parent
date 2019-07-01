@@ -6,4 +6,4 @@ dubbo:
     name: yitao-search-webapi
     qos-enable: false
   registry:
-    address:  zookeeper://192.168.221.99:2181
+    address:  zookeeper://192.168.91.131:2181

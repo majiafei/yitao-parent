@@ -20,6 +20,7 @@ import com.yitao.vo.BrandVO;
 import com.yitao.vo.SkuVO;
 import com.yitao.vo.SpecParamVO;
 import com.yitao.vo.SpuDetailVO;
+import lombok.extern.log4j.Log4j2;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -27,6 +28,7 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.MethodWrapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -47,6 +49,7 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@Log4j2
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
@@ -65,10 +68,13 @@ public class SearchServiceImpl implements SearchService {
     private SkuClient skuClient;
 
     @Autowired
-    private SearchRepository searchRepository;
+    private ElasticsearchTemplate template;
 
     @Autowired
-    private ElasticsearchTemplate template;
+    private SpuClient spuClient;
+
+    @Autowired
+    private SearchRepository searchRepository;
 
     private static final String BRAND_AGG_NAME = "brandAgg";
 
@@ -195,6 +201,28 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return SearchResult.build(result.getTotalElements(), result.getTotalPages(),content,brandVOList, categoryList, specs); // TODO
+    }
+
+    @Override
+    public void insertOrUpdateGoods(Long spuId) {
+        Spu spu = null;
+        try {
+            spu = spuClient.getSpuById(spuId);
+        } catch (Exception e) {
+            log.error("get spu failed", e);
+            throw new ServiceException("get spu failed", e);
+        }
+       if (spu == null) {
+           throw new ServiceException("spuid = " + spuId + " not exists");
+       }
+
+       try {
+           Goods goods = buildGoods(spu);
+           searchRepository.save(goods);
+       } catch (Exception e) {
+           log.error("save or update spu failed from es", e);
+           throw new ServiceException("save or update spu failed from es", e);
+       }
     }
 
     private List<Category> handleCategoryAg(LongTerms longTerms) {

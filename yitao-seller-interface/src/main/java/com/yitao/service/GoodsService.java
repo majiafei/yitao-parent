@@ -39,4 +39,5 @@ public interface GoodsService {
 
     Spu getSpuById(Long spuId);
 
+   void sendMessageToSearchService(Long spuId, String routeKey);
 }

@@ -22,4 +22,5 @@ public interface SearchService {
 
     SearchResult<Goods> search(SearchRequest searchRequest);
 
+    void insertOrUpdateGoods(Long spuId);
 }

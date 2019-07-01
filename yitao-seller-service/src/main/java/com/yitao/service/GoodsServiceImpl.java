@@ -14,15 +14,17 @@ import com.yitao.mapper.*;
 import com.yitao.vo.SkuVO;
 import com.yitao.vo.SpuDetailVO;
 import com.yitao.vo.SpuVO;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.lang.model.element.VariableElement;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -42,6 +44,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Service
+@Log4j2
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
@@ -61,6 +64,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public PageResult<SpuVO> querySpuListByCondition(SpuDTO spuDTO) {
@@ -132,6 +138,23 @@ public class GoodsServiceImpl implements GoodsService {
             }
         });
 
+        // 发送消息
+        sendMessageToSearchService(spu.getSpuId(), "item.insert");
+    }
+
+    /**
+     * 发送信息给search服务
+     * @param spuId
+     * @param routeKey
+     */
+    @Async
+    @Override
+    public void sendMessageToSearchService(Long spuId, String routeKey) {
+        try {
+            amqpTemplate.convertAndSend(routeKey, spuId);
+        } catch (AmqpException amqpException) {
+            log.error("send message to search failed", amqpException);
+        }
     }
 
     @Override

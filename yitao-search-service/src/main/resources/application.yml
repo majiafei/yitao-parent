@@ -19,3 +19,9 @@ spring:
     elasticsearch:
       cluster-name: elasticsearch
       cluster- nodes: 192.168.91.130:9300
+  rabbitmq:
+    host: 192.168.91.131
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /

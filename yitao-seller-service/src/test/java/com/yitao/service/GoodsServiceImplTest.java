@@ -29,4 +29,9 @@ public class GoodsServiceImplTest extends YitaoSellerServiceApplicationTests {
         System.out.println(spuVOPageResult.getTotal());
     }
 
+    @Test
+    public void testRabbit() {
+        goodsService.saveGoods(null);
+    }
+
 }

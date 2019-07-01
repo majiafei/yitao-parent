@@ -3,6 +3,7 @@ package com.yitao.service.repository;
 import com.yitao.search.model.Goods;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
+
 /**
  * @ClassName: SearchRepository
  * @Auther: admin
@@ -10,4 +11,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @Description:
  */
 public interface SearchRepository extends ElasticsearchRepository<Goods, Long> {
+    Goods findAllById(Long id);
 }
