@@ -1,0 +1,18 @@
+server:
+  port: 7780
+
+##################dubbo#################################
+dubbo:
+  registry:
+    address: zookeeper://192.168.221.99:2181
+  application:
+    name: yitao-detail-service
+  protocol:
+    port: 20884
+##################dubbo#################################
+seller:
+  server:
+    url: http://api.yitao.com
+static:
+  detail:
+    path: G:/program_resource/yitao/html/
