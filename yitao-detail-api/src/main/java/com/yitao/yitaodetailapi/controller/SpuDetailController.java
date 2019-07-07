@@ -31,6 +31,7 @@ public class SpuDetailController {
         //detailService.createHtml(spuId);
         // 异步生成静态详情页
 //        detailService.asyncExecute(spuId);
+        spuDetailService.creaetStaticHtml(spuId);
 
         return "item";
     }
