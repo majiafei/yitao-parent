@@ -16,6 +16,7 @@ import com.yitao.yitaodetailservice.client.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -83,6 +84,7 @@ public class SpuDetialServiceImpl implements SpuDetailService {
         return resultMap;
     }
 
+    @Async
     @Override
     public void creaetStaticHtml(Long spuId) {
         Context context = new Context();
