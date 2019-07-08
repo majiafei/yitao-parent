@@ -21,6 +21,9 @@
         <module>yitao-upload-webapi</module>
         <module>yitao-search-interface</module>
         <module>yitao-search-service</module>
+        <module>yitao-detail-interface</module>
+        <module>yitao-detail-service</module>
+        <module>yitao-detail-api</module>
     </modules>
 
     <properties>
@@ -36,6 +39,7 @@
         <junit.version>4.12</junit.version>
         <elasticsearch.version>2.1.5.RELEASE</elasticsearch.version>
         <fastjson-version>1.2.46</fastjson-version>
+        <yitao.version>1.0-SNAPSHOT</yitao.version>
     </properties>
 
     <dependencyManagement>
@@ -140,6 +144,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-detail-interface</artifactId>
+                <version>${yitao.version}</version>
             </dependency>
 
             <!--junit-->
