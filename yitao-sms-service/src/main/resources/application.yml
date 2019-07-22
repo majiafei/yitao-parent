@@ -1,0 +1,16 @@
+server:
+  port: 7783
+
+yt:
+  sms:
+    accessKeyId: C13907872
+    accessKeySecret: 3b38c5611c052c7de17d36f840fb4052
+    url: http://106.ihuyi.cn/webservice/sms.php?method=Submit
+
+spring:
+  rabbitmq:
+    host: 192.168.91.131
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
