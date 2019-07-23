@@ -24,6 +24,9 @@
         <module>yitao-detail-interface</module>
         <module>yitao-detail-service</module>
         <module>yitao-detail-api</module>
+        <module>yitao-sms-service</module>
+        <module>yitao-user-interface</module>
+        <module>yitao-user-service</module>
     </modules>
 
     <properties>
