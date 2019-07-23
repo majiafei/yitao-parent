@@ -16,6 +16,7 @@
  */
 package com.yitao.common.exception;
 
+import org.omg.CORBA.SystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Parameter validation failure exception
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class ParamValidationException extends SystemException {
+public class ParamValidationException extends RuntimeException {
 
     public ParamValidationException(String message) {
         super(message);
