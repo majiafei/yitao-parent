@@ -4,9 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.yitao.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName: UserController
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Description:
  */
 @Controller
+@RequestMapping("/api/user/")
 public class UserController {
 
     @Reference(check = false)
@@ -24,6 +23,13 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<Boolean> checkData(@PathVariable("data") String data, @PathVariable("type") Integer type) {
         return ResponseEntity.ok( userService.checkData(data, type));
+    }
+
+    @PostMapping("/send")
+    @ResponseBody
+    public ResponseEntity send(String phone) {
+
+        return null;
     }
 
 }
