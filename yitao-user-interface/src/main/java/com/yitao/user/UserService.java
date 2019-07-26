@@ -1,5 +1,7 @@
 package com.yitao.user;
 
+import com.yitao.domain.User;
+
 /**
  * @ClassName: service
  * @Auther: admin
@@ -16,4 +18,16 @@ public interface UserService{
      */
     Boolean checkData(String data, Integer type);
 
+    /**
+     * 发送验证码
+     * @param phone
+     */
+    void sendCode(String phone);
+
+    /**
+     * 注册用户
+     * @param user 用户对象
+     * @param code 验证码
+     */
+    void register(User user, String code);
 }
