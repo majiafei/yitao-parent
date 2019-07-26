@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,15 +20,16 @@ import java.util.Date;
 
 @Data
 @Table(name = "tb_user")
-public class User {
+public class User implements Serializable {
 
+    private static final long serialVersionUID = -7364332450688471423L;
     @Id
     @KeySql(useGeneratedKeys = true)
     @Column(name = "id")
     private Long userId;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
