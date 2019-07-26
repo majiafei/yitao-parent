@@ -1,6 +1,7 @@
 package com.yitao.yitaouserwebapi.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.yitao.domain.User;
 import com.yitao.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,15 @@ public class UserController {
     @PostMapping("/send")
     @ResponseBody
     public ResponseEntity send(String phone) {
+        userService.sendCode(phone);
+        return ResponseEntity.ok().build();
+    }
 
-        return null;
+    @PostMapping("/register")
+    @ResponseBody
+    public ResponseEntity<Void> register(User user, String code) {
+        userService.register(user, code);
+        return ResponseEntity.ok().build();
     }
 
 }
