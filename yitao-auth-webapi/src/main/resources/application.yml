@@ -1,0 +1,18 @@
+server:
+  port: 10060
+
+dubbo:
+  application:
+    name: yitao-auth-webapi
+    qos-enable: false
+  registry:
+    address:  zookeeper://192.168.91.131:2181
+
+yt:
+  jwt:
+    secret: yt@Login(Auth}*^778)&gerry%f35YUE2
+    pubKeyPath: D:/vip/keys/id_rsa.pub
+    priKeyPath: D:/vip/keys/id_rsa.pri
+    expire: 30
+    cookieName: YT_TOKEN
+    cookieMaxAge: 1800
