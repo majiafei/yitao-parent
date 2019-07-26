@@ -15,7 +15,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/orange?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
     username: root
   rabbitmq:
-    addresses: 192.168.221.131
+    addresses: 192.168.91.131
     username: admin
     password: admin
     virtual-host: /

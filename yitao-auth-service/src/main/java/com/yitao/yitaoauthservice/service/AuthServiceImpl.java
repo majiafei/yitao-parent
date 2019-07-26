@@ -8,7 +8,7 @@ import com.yitao.common.utils.CodecUtils;
 import com.yitao.common.utils.JwtUtils;
 import com.yitao.domain.User;
 import com.yitao.yitaoauthservice.client.UserClient;
-import com.yitao.yitaoauthservice.entity.JwtProperties;
+import com.yitao.auth.properties.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -48,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
             UserInfo userInfo = new UserInfo(userByName.getUserId(), userByName.getUsername());
             return JwtUtils.generateToken(userInfo, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException("用户名或者密码错误");
         }
     }

@@ -30,4 +30,6 @@ public interface UserService{
      * @param code 验证码
      */
     void register(User user, String code);
+
+    User queryByUserName(String userName);
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  * @ClassName: RsaUtils
@@ -32,5 +34,31 @@ public class RsaUtils {
             file.createNewFile();
         }
         Files.write(file.toPath(), publicKeyBytes);
+    }
+
+    public static PublicKey getPublicKey(String publicKeyFilePath) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+        byte[] bytes = readFile(publicKeyFilePath);
+        return getPublicKey(bytes);
+    }
+
+    public static PrivateKey getPrivateKey(String privateKeyFilePath) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+        byte[] bytes = readFile(privateKeyFilePath);
+        return getPrivateKey(bytes);
+    }
+
+    public static PublicKey getPublicKey(byte[] bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytes);
+        KeyFactory rsa = KeyFactory.getInstance("RSA");
+        return rsa.generatePublic(keySpec);
+    }
+
+    public static PrivateKey getPrivateKey(byte[] bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytes);
+        KeyFactory rsa = KeyFactory.getInstance("RSA");
+        return rsa.generatePrivate(keySpec);
+    }
+
+    public static byte[] readFile(String filePath) throws IOException {
+        return Files.readAllBytes(new File(filePath).toPath());
     }
 }

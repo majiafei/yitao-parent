@@ -1,4 +1,4 @@
-package com.yitao.yitaoauthservice.entity;
+package com.yitao.auth.properties;
 
 import com.yitao.common.utils.RsaUtils;
 import lombok.Data;

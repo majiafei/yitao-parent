@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.collect.Maps;
 import com.yitao.common.exception.ParamValidationException;
 import com.yitao.common.exception.ServiceException;
-import com.yitao.yitaouserservice.utils.CodecUtils;
+import com.yitao.common.utils.CodecUtils;
 import com.yitao.common.utils.NumberUtils;
 import com.yitao.domain.User;
 import com.yitao.mapper.UserMapper;
@@ -96,5 +96,12 @@ public class UserServiceImpl implements UserService {
         }
         // 将验证码从redis中删除
         stringRedisTemplate.delete(key);
+    }
+
+    @Override
+    public User queryByUserName(String userName) {
+        User user = new User();
+        user.setUsername(userName);
+        return userMapper.selectOne(user);
     }
 }

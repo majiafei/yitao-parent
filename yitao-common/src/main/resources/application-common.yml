@@ -1,0 +1,4 @@
+#yt:
+#  jwt:
+#    pubKeyPath: D:/vip/keys/gerry/id_rsa.pub # 公钥地址
+#    cookieName: YT_TOKEN # cookie的名称

@@ -40,4 +40,11 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/queryByUserName")
+    @ResponseBody
+    public ResponseEntity<User> queryByUserName(String userName) {
+        User user = userService.queryByUserName(userName);
+        return ResponseEntity.ok(user);
+    }
+
 }
