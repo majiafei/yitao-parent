@@ -27,6 +27,7 @@
         <module>yitao-sms-service</module>
         <module>yitao-user-interface</module>
         <module>yitao-user-service</module>
+        <module>yitao-user-webapi</module>
     </modules>
 
     <properties>
@@ -42,6 +43,7 @@
         <junit.version>4.12</junit.version>
         <elasticsearch.version>2.1.5.RELEASE</elasticsearch.version>
         <fastjson-version>1.2.46</fastjson-version>
+        <jedis-version>2.9.0</jedis-version>
         <yitao.version>1.0-SNAPSHOT</yitao.version>
     </properties>
 
@@ -153,6 +155,18 @@
                 <groupId>com.yitao</groupId>
                 <artifactId>yitao-detail-interface</artifactId>
                 <version>${yitao.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-user-interface</artifactId>
+                <version>${yitao.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis-version}</version>
             </dependency>
 
             <!--junit-->

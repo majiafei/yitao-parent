@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class GoodsListener {
 
-    @Reference(check = false)
+    @Autowired
     private SearchService searchService;
 
     /**
@@ -39,7 +39,7 @@ public class GoodsListener {
         if (log.isDebugEnabled()) {
             log.debug("将新增加或者更新的商品同步到索引库");
         }
-        searchService.insertOrUpdateGoods(spuId);
+         searchService.insertOrUpdateGoods(spuId);
     }
 
 }

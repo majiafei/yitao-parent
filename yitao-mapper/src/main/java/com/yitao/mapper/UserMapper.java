@@ -1,7 +1,7 @@
 package com.yitao.mapper;
 
 import com.yitao.domain.User;
-import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.BaseMapper;
 
 /**
  * @ProjectName: house
@@ -11,5 +11,5 @@ import tk.mybatis.mapper.common.Mapper;
  * @Description:
  * @Date: 2019/5/4 11:08
  */
-public interface UserMapper extends Mapper<User> {
+public interface UserMapper extends BaseMapper<User>{
 }
