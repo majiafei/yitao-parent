@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 /**
  * @ClassName: CookieUtils
@@ -88,12 +89,64 @@ public class CookieUtils {
         }
 
         public void addCookie(String cookieName, String cookieValue) {
-            Cookie cookie = new Cookie(cookieName, cookieValue);
-            if (maxAge != null && maxAge > 0) {
-                cookie.setMaxAge(maxAge);
+            try {
+                if (org.apache.commons.lang3.StringUtils.isBlank(charset)) {
+                    charset = "utf-8";
+                }
+
+                if (cookieValue == null) {
+                    cookieValue = "";
+                } else if (org.apache.commons.lang3.StringUtils.isNotBlank(charset)) {
+                    cookieValue = URLEncoder.encode(cookieValue, charset);
+                }
+                Cookie cookie = new Cookie(cookieName, cookieValue);
+//                if (maxAge != null && maxAge > 0)
+                    cookie.setMaxAge(maxAge);
+                if (null != request)// 设置域名的cookie
+                    cookie.setDomain(getDomainName(request));
+                cookie.setPath("/");
+
+                cookie.setHttpOnly(httpOnly);
+                response.addCookie(cookie);
+            } catch (Exception e) {
+                log.error("Cookie Encode Error.", e);
             }
-            cookie.setHttpOnly(httpOnly);
-            response.addCookie(cookie);
+        }
+
+        /**
+         * 得到cookie的域名
+         */
+        private String getDomainName(HttpServletRequest request) {
+            String domainName = null;
+
+            // 必须在nginx的配置中添加 proxy_set_header Host $host;
+            // 否则获取不到真实的域名信息
+            String serverName = request.getRequestURL().toString();
+            if (serverName == null || serverName.equals("")) {
+                domainName = "";
+            } else {
+                serverName = serverName.toLowerCase();
+                serverName = serverName.substring(7);
+                final int end = serverName.indexOf("/");
+                serverName = serverName.substring(0, end);
+                final String[] domains = serverName.split("\\.");
+                int len = domains.length;
+                if (len > 3) {
+                    // www.xxx.com.cn
+                    domainName = domains[len - 3] + "." + domains[len - 2] + "." + domains[len - 1];
+                } else if (len <= 3 && len > 1) {
+                    // xxx.com or xxx.cn
+                    domainName = domains[len - 2] + "." + domains[len - 1];
+                } else {
+                    domainName = serverName;
+                }
+            }
+
+            if (domainName != null && domainName.indexOf(":") > 0) {
+                String[] ary = domainName.split("\\:");
+                domainName = ary[0];
+            }
+            return domainName;
         }
     }
 
