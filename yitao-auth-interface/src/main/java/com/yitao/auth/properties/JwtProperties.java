@@ -47,7 +47,8 @@ public class JwtProperties {
             if (!pubFile.exists() || !privateFile.exists()) {
                 RsaUtils.generateKey(pubKeyPath, priKeyPath, secret);
             }
-
+            publicKey = RsaUtils.getPublicKey(pubKeyPath);
+            privateKey = RsaUtils.getPrivateKey(priKeyPath);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("生成公钥私钥失败");
