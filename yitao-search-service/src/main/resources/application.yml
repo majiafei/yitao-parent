@@ -5,6 +5,7 @@ server:
 dubbo:
   application:
     name: yitao-search-service
+    qos-enable: false
   registry:
     address: zookeeper://192.168.91.131:2181
   protocol:
