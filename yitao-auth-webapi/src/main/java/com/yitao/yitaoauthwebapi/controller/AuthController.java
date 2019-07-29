@@ -88,9 +88,9 @@ public class AuthController {
      * @return
      */
     @GetMapping("logout")
-    public ResponseEntity<Void> logout(@CookieValue("YT_TOKEN") String token, HttpServletResponse response) {
+    public ResponseEntity<Void> logout(@CookieValue("YT_TOKEN") String token, HttpServletResponse response, HttpServletRequest request) {
         if (org.apache.commons.lang3.StringUtils.isNotBlank(token)) {
-            CookieUtils.cookieBuider().response(response).maxAge(0).addCookie(jwtProperties .getCookieName(), token);
+            CookieUtils.cookieBuider().response(response).maxAge(0).request(request).addCookie(jwtProperties .getCookieName(), token);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
