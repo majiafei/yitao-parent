@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
             // 判断密码是否正确
             String salt = userByName.getSalt();
             // 将数据库中的密码和盐进行加密
-            String md5Pass = CodecUtils.md5Hex(userByName.getPassword(), salt);
+            String md5Pass = userByName.getPassword();
             // 将用户输入的密码进行加密
             String mdfUserInputPass = CodecUtils.md5Hex(user.getPassword(), salt);
             if (!md5Pass.equals(mdfUserInputPass)) {
