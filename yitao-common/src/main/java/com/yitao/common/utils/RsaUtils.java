@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 /**
@@ -53,9 +54,9 @@ public class RsaUtils {
     }
 
     public static PrivateKey getPrivateKey(byte[] bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytes);
-        KeyFactory rsa = KeyFactory.getInstance("RSA");
-        return rsa.generatePrivate(keySpec);
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytes);
+        KeyFactory factory = KeyFactory.getInstance("RSA");
+        return factory.generatePrivate(spec);
     }
 
     public static byte[] readFile(String filePath) throws IOException {

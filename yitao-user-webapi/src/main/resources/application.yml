@@ -4,5 +4,6 @@ server:
 dubbo:
   application:
     name: yitao-user-webapi
+    qos-enable: false
   registry:
     address: zookeeper://192.168.91.131:2181
