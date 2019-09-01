@@ -1,9 +1,6 @@
 package com.yitao.service.listener;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.yitao.search.service.SearchService;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -13,33 +10,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>
- *     监听商品的增加删除和修改
- * </p>
+ * @ProjectName: house
+ * @Package: com.yitao.service.listener
  * @ClassName: GoodsListener
- * @Auther: admin
- * @Date: 2019/7/1 17:41
+ * @Author: majiafei
  * @Description:
+ * @Date: 2019/7/1 21:57
  */
 @Component
-@Log4j2
 public class GoodsListener {
 
-    @Reference(check = false)
+    @Autowired
     private SearchService searchService;
 
-    /**
-     * 监听商品的添加和修改
-     * @param spuId
-     */
-    @RabbitListener(bindings = @QueueBinding(value = @Queue(name = "yt.item.instert.queue", durable = "true"),
-                        exchange = @Exchange(name = "yt.item.exchange", type = ExchangeTypes.TOPIC,
-                        ignoreDeclarationExceptions = "true"), key = {"item.insert", "item.update"}))
-    public void listenerGoodsInsterOrUpdate(Long spuId) {
-        if (log.isDebugEnabled()) {
-            log.debug("将新增加或者更新的商品同步到索引库");
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "yt.search.insert.queue", durable = "true"),
+            exchange = @Exchange(name = "yt.item.exchange",
+                    type = ExchangeTypes.TOPIC,
+                    ignoreDeclarationExceptions = "true"),
+            key = {"item.insert", "item.update"}
+    ))
+    public void listenInsert(Long id) {
+        //监听新增或更新
+        if (id != null) {
+            System.out.println("处理insert/update消息");
+            searchService.insertOrUpdateGoods(id);
         }
-        searchService.insertOrUpdateGoods(spuId);
     }
 
 }
