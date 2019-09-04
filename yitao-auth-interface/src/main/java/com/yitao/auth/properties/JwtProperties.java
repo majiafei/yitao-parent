@@ -50,8 +50,8 @@ public class JwtProperties {
             publicKey = RsaUtils.getPublicKey(pubKeyPath);
             privateKey = RsaUtils.getPrivateKey(priKeyPath);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("生成公钥私钥失败");
+            throw new RuntimeException("生成公钥私钥失败");
         }
     }
 
