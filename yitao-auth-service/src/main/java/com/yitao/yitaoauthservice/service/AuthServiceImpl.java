@@ -28,28 +28,29 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(User user) {
+
+        User userByName = userClient.getUserByUserName(user.getUsername());
+        if (userByName == null) {
+            throw new ServiceException("用户名或者密码错误");
+        }
+
+        // 判断密码是否正确
+        String salt = userByName.getSalt();
+        // 将数据库中的密码和盐进行加密
+        String md5Pass = userByName.getPassword();
+        // 将用户输入的密码进行加密
+        String mdfUserInputPass = CodecUtils.md5Hex(user.getPassword(), salt);
+        if (!md5Pass.equals(mdfUserInputPass)) {
+            throw new ServiceException("用户名或者密码错误");
+        }
+
         try {
-            User userByName = userClient.getUserByUserName(user.getUsername());
-            if (userByName == null) {
-                throw new ServiceException("用户名或者密码错误");
-            }
-
-            // 判断密码是否正确
-            String salt = userByName.getSalt();
-            // 将数据库中的密码和盐进行加密
-            String md5Pass = userByName.getPassword();
-            // 将用户输入的密码进行加密
-            String mdfUserInputPass = CodecUtils.md5Hex(user.getPassword(), salt);
-            if (!md5Pass.equals(mdfUserInputPass)) {
-                throw new ServiceException("用户名或者密码错误");
-            }
-
             // 生成token
             UserInfo userInfo = new UserInfo(userByName.getUserId(), userByName.getUsername());
             return JwtUtils.generateToken(userInfo, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException("用户名或者密码错误");
+            throw new ServiceException("生成token失败");
         }
     }
 }
