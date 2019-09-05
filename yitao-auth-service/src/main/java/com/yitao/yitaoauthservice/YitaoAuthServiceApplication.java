@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@SpringBootApplication(scanBasePackages = "com.yitao", exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @MapperScan(basePackages = "com.yitao.mapper")
 @EnableDubbo
 public class YitaoAuthServiceApplication {
