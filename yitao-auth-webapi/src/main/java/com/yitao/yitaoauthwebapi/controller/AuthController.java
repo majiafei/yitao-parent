@@ -71,7 +71,7 @@ public class AuthController {
                     .charset("utf-8")
                     .response(response)
                     .request(request)
-                    .addCookie(jwtProperties.getCookieName(), token);
+                    .addCookie(jwtProperties.getCookieName(), newToken);
 
             return ResponseEntity.ok(userInfo);
         } catch (Exception e) {
