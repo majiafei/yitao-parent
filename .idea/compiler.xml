@@ -6,27 +6,47 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="yitao-common" />
-        <module name="yitao-domain" />
-        <module name="yitao-mapper" />
         <module name="yitao-seller-interface" />
         <module name="yitao-seller-service" />
+        <module name="yitao-auth-webapi" />
         <module name="yitao-seller-webapi" />
-        <module name="yitao-upload-interface" />
-        <module name="yitao-upload-service" />
+        <module name="yitao-user-webapi" />
         <module name="yitao-upload-webapi" />
+        <module name="yitao-auth-service" />
+        <module name="yitao-domain" />
+        <module name="yitao-search-service" />
+        <module name="yitao-search-webapi" />
+        <module name="yitao-detail-service" />
+        <module name="yitao-upload-service" />
+        <module name="yitao-user-service" />
+        <module name="yitao-detail-interface" />
+        <module name="yitao-user-interface" />
+        <module name="yitao-detail-api" />
+        <module name="yitao-upload-interface" />
+        <module name="yitao-sms-service" />
+        <module name="yitao-auth-interface" />
+        <module name="yitao-common" />
+        <module name="yitao-mapper" />
+        <module name="yitao-search-interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="yitao-detail-webapi" target="1.8" />
+      <module name="yitaoi-detail-webapi" target="1.8" />
       <module name="yitaouploadinterface" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="yitao-detail-api" options="" />
+      <module name="yitao-detail-service" options="" />
+      <module name="yitao-detail-webapi" options="-parameters" />
+      <module name="yitao-search-webapi" options="" />
       <module name="yitao-seller-service" options="" />
       <module name="yitao-seller-webapi" options="" />
       <module name="yitao-upload-service" options="" />
       <module name="yitao-upload-webapi" options="" />
+      <module name="yitaoi-detail-webapi" options="-parameters" />
     </option>
   </component>
 </project>

@@ -13,6 +13,12 @@
         <option value="$PROJECT_DIR$/yitao-upload-service/pom.xml" />
         <option value="$PROJECT_DIR$/yitao-upload-webapi/pom.xml" />
         <option value="$PROJECT_DIR$/yitao-upload-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-search-webapi/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-detail-service/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-detail-api/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-auth-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/yitao-auth-webapi/pom.xml" />
       </list>
     </option>
   </component>

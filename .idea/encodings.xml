@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+  <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-auth-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-auth-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-auth-webapi" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-detail-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-detail-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-detail-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-domain" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-mapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-search-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-search-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-search-webapi" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-seller-interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-seller-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-seller-webapi" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/yitao-upload-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-sms-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-upload-interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-upload-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yitao-upload-webapi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-user-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-user-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yitao-user-webapi" charset="UTF-8" />
   </component>
 </project>
