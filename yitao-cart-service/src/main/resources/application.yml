@@ -1,0 +1,14 @@
+server:
+  port: 7782
+spring:
+  redis:
+    port: 6379
+    host: 192.168.91.131
+dubbo:
+  application:
+    name: yitao-cart-service
+    qos-enable: false
+  registry:
+    address: zookeeper://192.168.91.131:2181
+  protocol:
+    port: 20887
