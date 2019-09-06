@@ -8,7 +8,9 @@ import com.yitao.common.utils.RsaUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -56,6 +58,7 @@ public class LoginInterceptor implements WebMvcConfigurer {
                         return true;
                     }
                 } catch (Exception e) {
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     log.error("未登录,非法访问");
                 }
                 return false;
