@@ -31,6 +31,9 @@
         <module>yitao-user-service</module>
         <module>yitao-user-webapi</module>
         <module>yitao-sms-service</module>
+        <module>yitao-cart-interface</module>
+        <module>yitao-cart-service</module>
+        <module>yitao-cart-webapi</module>
     </modules>
 
     <properties>
