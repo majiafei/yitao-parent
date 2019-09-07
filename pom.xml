@@ -31,6 +31,9 @@
         <module>yitao-user-service</module>
         <module>yitao-user-webapi</module>
         <module>yitao-sms-service</module>
+        <module>yitao-cart-interface</module>
+        <module>yitao-cart-service</module>
+        <module>yitao-cart-webapi</module>
     </modules>
 
     <properties>
@@ -176,6 +179,12 @@
             <dependency>
                 <groupId>com.yitao</groupId>
                 <artifactId>yitao-user-interface</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yitao</groupId>
+                <artifactId>yitao-cart-interface</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 

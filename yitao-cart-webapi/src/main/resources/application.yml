@@ -1,0 +1,11 @@
+server:
+  port: 10070
+dubbo:
+  application:
+    qos-enable: false
+    name: yitao-cart-webapi
+  registry:
+    address: zookeeper://192.168.91.131:2181
+spring:
+  profiles:
+    active: common
