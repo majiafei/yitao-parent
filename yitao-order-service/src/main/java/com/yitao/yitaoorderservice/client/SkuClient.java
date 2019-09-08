@@ -1,6 +1,7 @@
 package com.yitao.yitaoorderservice.client;
 
 import com.google.common.base.Joiner;
+import com.yitao.common.utils.JsonUtils;
 import com.yitao.common.utils.RestTemplateUtils;
 import com.yitao.domain.Sku;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,8 @@ public class SkuClient {
     public List<Sku> getSkuList(Set<Long> skuIdList) {
         String url = serverUrl + "/api/item/sku/skuListByIds?skuIds={skuIds}";
         ResponseEntity<List> entity = RestTemplateUtils.getForEntity(url, List.class, Joiner.on(",").join(skuIdList));
+        List<Sku> skuList = JsonUtils.fromJsonToList(JsonUtils.fromObjectToString(entity.getBody()), Sku.class);
 
-        return entity.getBody();
+        return skuList;
     }
 }
