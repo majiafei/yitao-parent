@@ -65,7 +65,7 @@ public class CartServiceImpl implements CartService {
         if (hashOperations.hasKey(skuId)) {
             Cart cart = JsonUtils.toObject(String.valueOf(hashOperations.get(skuId)), Cart.class);
             // 将数量相加
-            cart.setNum(cart.getNum() + num);
+            cart.setNum(num);
 
             // 将cart重新设置到redis中
             hashOperations.put(skuId, JsonUtils.fromObjectToString(cart));
