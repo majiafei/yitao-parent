@@ -42,4 +42,11 @@ public interface CartService {
      */
     void increment(Long id, Integer num, UserInfo userInfo);
 
+    /**
+     * 从购物车中删除某个商品
+     * @param skuId 某商品的skuid
+     * @param userInfo 用户信息
+     */
+    void deleteCart(Long skuId, UserInfo userInfo);
+
 }
