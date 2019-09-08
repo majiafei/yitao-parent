@@ -31,17 +31,8 @@ public class CartServiceImpl implements CartService {
         String key = CART_PREFIX + userInfo.getId();
         // 查看redis中是否已经该商品
         BoundHashOperations<String, Object, Object> hashOperations = redisTemplate.boundHashOps(key);
-        String skuId = String.valueOf(cart.getSkuId());
-        // 如果有，直接将数量相加
-        if (hashOperations.hasKey(skuId)) {
-            Cart oldCart = JsonUtils.toObject(hashOperations.get(skuId).toString(), Cart.class);
-            oldCart.setNum(oldCart.getNum() + cart.getNum());
-            hashOperations.put(skuId, JsonUtils.fromObjectToString(oldCart));
-        } else {
 
-            // 没有，将该cart的信息添加到redis中
-            hashOperations.put(String.valueOf(skuId), JsonUtils.fromObjectToString(cart));
-        }
+        addCart(cart, hashOperations);
     }
 
     @Override
@@ -51,5 +42,31 @@ public class CartServiceImpl implements CartService {
         List<Object> carts = boundHashOperations.values();
 
         return carts.stream().map(s -> JsonUtils.toObject(String.valueOf(s), Cart.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void batchAddCart(List<Cart> cartList, UserInfo userInfo) {
+        // 构造key，前缀+userId
+        String key = CART_PREFIX + userInfo.getId();
+        BoundHashOperations<String, Object, Object> hashOperations = redisTemplate.boundHashOps(key);
+        // 遍历cartList
+        for (Cart cart : cartList) {
+           addCart(cart, hashOperations);
+        }
+    }
+
+    private void addCart(Cart cart, BoundHashOperations hashOperations) {
+        String skuId = String.valueOf(cart.getSkuId());
+        if (hashOperations.hasKey(skuId)) {
+            Cart cartInRedis = JsonUtils.toObject(String.valueOf(hashOperations.get(skuId)), Cart.class);
+            // 将数量相加
+            cartInRedis.setNum(cartInRedis.getNum() + cart.getNum());
+
+            // 数量相加完后，再次存到redis中
+            hashOperations.put(skuId, JsonUtils.fromObjectToString(cartInRedis));
+        } else {
+            // 没有，直接添加到购物车
+            hashOperations.put(skuId, JsonUtils.fromObjectToString(cart));
+        }
     }
 }
