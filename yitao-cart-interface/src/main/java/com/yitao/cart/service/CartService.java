@@ -27,4 +27,11 @@ public interface CartService {
      */
     List<Cart> getCarts(UserInfo userInfo);
 
+    /**
+     * 批量添加商品到购物车
+     * @param cartList
+     * @param userInfo
+     */
+    void batchAddCart(List<Cart> cartList, UserInfo userInfo);
+
 }
