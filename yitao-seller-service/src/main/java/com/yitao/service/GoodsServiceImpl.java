@@ -3,6 +3,7 @@ package com.yitao.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.yitao.common.enums.GoodsStatusEnum;
 import com.yitao.common.exception.ServiceException;
 import com.yitao.domain.*;
@@ -155,6 +156,19 @@ public class GoodsServiceImpl implements GoodsService {
         } catch (AmqpException amqpException) {
             log.error("send message to search failed", amqpException);
         }
+    }
+
+    @Override
+    public List<Sku> skuListByIds(List<Long> skuIds) {
+        List<Sku> skuList = Lists.newArrayList();
+        for (Long skuId : skuIds) {
+            Sku sku = skuMapper.selectByPrimaryKey(skuId);
+            if (sku == null) {
+                throw new ServiceException("skuId:" + skuId + "不存在");
+            }
+            skuList.add(sku);
+        }
+        return skuList;
     }
 
     @Override
