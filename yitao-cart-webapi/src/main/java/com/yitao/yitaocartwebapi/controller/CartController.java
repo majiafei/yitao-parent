@@ -82,6 +82,18 @@ public class CartController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<Void> increment(Long id, Integer num, HttpServletRequest request) {
+        try {
+            cartService.increment(id, num, getUserInfoFromToken(request));
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("未授权", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
     private UserInfo getUserInfoFromToken(HttpServletRequest request) throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
         String token = CookieUtils.getCookieValue(request, jwtProperties.getCookieName());
         UserInfo userInfo = JwtUtils.getUserInfo(RsaUtils.getPublicKey(jwtProperties.getPubKeyPath()), token);
