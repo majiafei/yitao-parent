@@ -50,10 +50,8 @@ public class CartController {
     @PostMapping
     public ResponseEntity addCart(@RequestBody Cart cart, HttpServletRequest request) {
         try {
-            String token = CookieUtils.getCookieValue(request, jwtProperties.getCookieName());
-            UserInfo userInfo = JwtUtils.getUserInfo(RsaUtils.getPublicKey(jwtProperties.getPubKeyPath()), token);
             // 添加到购物车
-            cartService.addCart(cart, userInfo);
+            cartService.addCart(cart, getUserInfoFromToken(request));
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -69,6 +67,18 @@ public class CartController {
         } catch (Exception e) {
             log.error("get carts", e);
             throw new ServiceException("用户为授权");
+        }
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<Void> batchAddCart(@RequestBody List<Cart> cartList, HttpServletRequest request) {
+        try {
+            cartService.batchAddCart(cartList, getUserInfoFromToken(request));
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("用户未授权");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
