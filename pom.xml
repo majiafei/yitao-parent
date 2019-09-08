@@ -34,6 +34,9 @@
         <module>yitao-cart-interface</module>
         <module>yitao-cart-service</module>
         <module>yitao-cart-webapi</module>
+        <module>yitao-order-intrerface</module>
+        <module>yitao-order-service</module>
+        <module>yitao-order-webapi</module>
     </modules>
 
     <properties>
