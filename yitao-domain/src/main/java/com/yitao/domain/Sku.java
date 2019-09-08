@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Date;
 
 @Data
 @Table(name = "tb_sku")
-public class Sku {
+public class Sku implements Serializable {
 
     @Id
     @KeySql(useGeneratedKeys = true)
