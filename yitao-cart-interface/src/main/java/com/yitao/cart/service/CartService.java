@@ -34,4 +34,12 @@ public interface CartService {
      */
     void batchAddCart(List<Cart> cartList, UserInfo userInfo);
 
+    /**
+     * 增加商品的数量
+     * @param id skuid
+     * @param num 数量
+     * @param userInfo 用户的信息
+     */
+    void increment(Long id, Integer num, UserInfo userInfo);
+
 }
