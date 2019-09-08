@@ -72,6 +72,18 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    @Override
+    public void deleteCart(Long skuId, UserInfo userInfo) {
+        String key = CART_PREFIX + userInfo.getId();
+        BoundHashOperations<String, Object, Object> hashOperations = redisTemplate.boundHashOps(key);
+
+        String skuIdStr = String.valueOf(skuId);
+        if (hashOperations.hasKey(skuIdStr)) {
+            // 删除该sku
+            hashOperations.delete(skuIdStr);
+        }
+    }
+
     private void addCart(Cart cart, BoundHashOperations hashOperations) {
         String skuId = String.valueOf(cart.getSkuId());
         if (hashOperations.hasKey(skuId)) {
