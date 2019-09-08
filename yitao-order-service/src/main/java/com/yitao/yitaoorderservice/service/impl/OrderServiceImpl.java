@@ -109,9 +109,9 @@ public class OrderServiceImpl implements OrderService {
         orderStatus.setOrderStatus(OrderStatusEnum.INIT.getCode());
 
         // 插入数据到数据库
-        orderMapper.insert(order);
+        orderMapper.insertSelective(order);
         orderDetailMapper.insertList(orderDeailList);
-        orderStatusMapper.insert(orderStatus);
+        orderStatusMapper.insertSelective(orderStatus);
 
         // 减库存
 
