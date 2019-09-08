@@ -69,8 +69,8 @@ public class GoodsController {
     }
 
     @GetMapping("/sku/skuListByIds")
-    public List<Sku> skuListByIds(@RequestParam("skuIds") List<Long> skuIds) {
-        return goodsService.skuListByIds(skuIds);
+    public ResponseEntity<List<Sku>> skuListByIds(@RequestParam("skuIds") List<Long> skuIds) {
+        return ResponseEntity.ok(goodsService.skuListByIds(skuIds));
     }
 
 }
