@@ -94,6 +94,18 @@ public class CartController {
         }
     }
 
+    @DeleteMapping("/{skuId}")
+    public ResponseEntity<Void> deleteCart(@PathVariable("skuId") Long skuId, HttpServletRequest request) {
+        try {
+            cartService.deleteCart(skuId, getUserInfoFromToken(request));
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("用户未授权", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
     private UserInfo getUserInfoFromToken(HttpServletRequest request) throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
         String token = CookieUtils.getCookieValue(request, jwtProperties.getCookieName());
         UserInfo userInfo = JwtUtils.getUserInfo(RsaUtils.getPublicKey(jwtProperties.getPubKeyPath()), token);
