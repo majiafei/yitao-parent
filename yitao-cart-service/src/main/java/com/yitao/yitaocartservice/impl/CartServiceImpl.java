@@ -55,6 +55,23 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    @Override
+    public void increment(Long id, Integer num, UserInfo userInfo) {
+        String key = CART_PREFIX + userInfo.getId();
+        // 获取该用户的购物车信息
+        BoundHashOperations<String, Object, Object> hashOperations = redisTemplate.boundHashOps(key);
+        String skuId = String.valueOf(id);
+
+        if (hashOperations.hasKey(skuId)) {
+            Cart cart = JsonUtils.toObject(String.valueOf(hashOperations.get(skuId)), Cart.class);
+            // 将数量相加
+            cart.setNum(cart.getNum() + num);
+
+            // 将cart重新设置到redis中
+            hashOperations.put(skuId, JsonUtils.fromObjectToString(cart));
+        }
+    }
+
     private void addCart(Cart cart, BoundHashOperations hashOperations) {
         String skuId = String.valueOf(cart.getSkuId());
         if (hashOperations.hasKey(skuId)) {
