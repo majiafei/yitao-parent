@@ -1,5 +1,6 @@
 package com.yitao.service;
 
+import com.yitao.domain.Sku;
 import com.yitao.domain.Spu;
 import com.yitao.dto.SpuDTO;
 import com.yitao.entiry.PageResult;
@@ -40,4 +41,6 @@ public interface GoodsService {
     Spu getSpuById(Long spuId);
 
    void sendMessageToSearchService(Long spuId, String routeKey);
+
+   List<Sku> skuListByIds(List<Long> skuIds);
 }
