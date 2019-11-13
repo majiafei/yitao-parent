@@ -62,6 +62,7 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<UserInfo> verifyUser(@CookieValue("YT_TOKEN") String token, HttpServletRequest request, HttpServletResponse response) {
         try {
+
             // 验证改用户是否已经登录
             UserInfo userInfo = JwtUtils.getUserInfo(jwtProperties.getPublicKey(), token);
             // 如果登录，则刷新token
